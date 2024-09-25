@@ -28,7 +28,8 @@ export class LanguageService {
       totalCountOfGames: 'Pelien kokonaismäärä',
       averageGuesses: 'Arvausten keskiarvo',
       close: 'Sulje',
-      winMessage: 'Voitit!'
+      winMessage: 'Voitit!',
+      falseGuess: 'Numeron tulee olla välillä 1-100',
     },
     en: {
       guideMessage: 'Guess a number between 1-100',
@@ -48,7 +49,8 @@ export class LanguageService {
       totalCountOfGames: 'Total count of games',
       averageGuesses: 'Average of guesses',
       close: 'Close',
-      winMessage: 'You win!'
+      winMessage: 'You win!',
+      falseGuess: 'Number must be between 1-100',
     }
   };
 

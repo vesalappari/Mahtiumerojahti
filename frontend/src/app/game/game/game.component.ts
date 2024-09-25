@@ -51,31 +51,35 @@ export class GameComponent implements OnInit {
   async makeGuess() {
     this.showModal = false;
     if (this.gameId && this.guess) {
-      if (this.guess && this.gameRunning && !this.isInGuessed(this.guess)) {
-        this.guessedNumbers.push(this.guess);
-        this.guessedNumbers = this.guessedNumbers.sort((a, b) => a - b);
-        this.gameService.guessNumber(this.gameId, this.guess).subscribe(result => {
-          this.attempts = result.attempts;
-          if (result.correct) {
-            this.languageService.messageKey = this.languageService.getMessage('correctGuess', { attempts: this.attempts });
-            this.gameRunning = false;
-            this.closeGuess = false;
-            this.triggerWinningAnimation();
-          } else if (result.lower) {
-            this.languageService.messageKey = this.languageService.getMessage('lowGuess');
-          } else if (result.higher) {
-            this.languageService.messageKey = this.languageService.getMessage('highGuess');
-          }
+      if (this.guess < 1 || this.guess > 100) {
+        this.showModalMessage(this.languageService.getMessage('falseGuess'), 2000)
+      } else {
+        if (this.guess && this.gameRunning && !this.isInGuessed(this.guess)) {
+          this.guessedNumbers.push(this.guess);
+          this.guessedNumbers = this.guessedNumbers.sort((a, b) => a - b);
+          this.gameService.guessNumber(this.gameId, this.guess).subscribe(result => {
+            this.attempts = result.attempts;
+            if (result.correct) {
+              this.languageService.messageKey = this.languageService.getMessage('correctGuess', { attempts: this.attempts });
+              this.gameRunning = false;
+              this.closeGuess = false;
+              this.triggerWinningAnimation();
+            } else if (result.lower) {
+              this.languageService.messageKey = this.languageService.getMessage('lowGuess');
+            } else if (result.higher) {
+              this.languageService.messageKey = this.languageService.getMessage('highGuess');
+            }
 
-          if (result.close && !result.correct) {
-            this.closeGuess = true;
-            this.showModalMessage(this.languageService.getMessage('closeGuess'), 2000)
-          }
-        });
-      } else if (this.guess && this.isInGuessed(this.guess) && this.gameRunning) {
-        this.showModalMessage(this.languageService.getMessage('isGuessed'),2000);
-      } else if (this.guess && !this.gameRunning) {
-        this.showModalMessage(this.languageService.getMessage('gameOverMessage'), 2000);
+            if (result.close && !result.correct) {
+              this.closeGuess = true;
+              this.showModalMessage(this.languageService.getMessage('closeGuess'), 2000)
+            }
+          });
+        } else if (this.guess && this.isInGuessed(this.guess) && this.gameRunning) {
+          this.showModalMessage(this.languageService.getMessage('isGuessed'),2000);
+        } else if (this.guess && !this.gameRunning) {
+          this.showModalMessage(this.languageService.getMessage('gameOverMessage'), 2000);
+        }
       }
     }
   }
