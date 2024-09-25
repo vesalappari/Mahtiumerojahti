@@ -79,4 +79,12 @@ export class GameService {
       where: { isGuessed },
     });
   }
+
+  async removeAllGames(): Promise<void> {
+    try {
+      await this.gameRepository.clear();
+    } catch (error) {
+      throw new Error('Failed to remove all games');
+    }
+  }
 }

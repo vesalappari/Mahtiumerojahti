@@ -30,6 +30,7 @@ export class LanguageService {
       close: 'Sulje',
       winMessage: 'Voitit!',
       falseGuess: 'Numeron tulee olla välillä 1-100',
+      clearAll: 'Poista kaikki',
     },
     en: {
       guideMessage: 'Guess a number between 1-100',
@@ -51,6 +52,7 @@ export class LanguageService {
       close: 'Close',
       winMessage: 'You win!',
       falseGuess: 'Number must be between 1-100',
+      clearAll: 'Clear all',
     }
   };
 

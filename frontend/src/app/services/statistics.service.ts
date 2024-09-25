@@ -22,4 +22,9 @@ export class StatisticsService {
   getTotalCountOfGames(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count`);
   }
+
+  clearAllGames(): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(`${this.apiUrl}/clear-all`, {});
+  }
+
 }

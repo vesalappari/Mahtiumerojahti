@@ -68,6 +68,14 @@ let GameService = class GameService {
             where: { isGuessed },
         });
     }
+    async removeAllGames() {
+        try {
+            await this.gameRepository.clear();
+        }
+        catch (error) {
+            throw new Error('Failed to remove all games');
+        }
+    }
 };
 exports.GameService = GameService;
 exports.GameService = GameService = __decorate([

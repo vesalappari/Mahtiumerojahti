@@ -11,6 +11,16 @@ export class GameController {
     return { gameId: game.id };
   }
 
+  @Post('clear-all')
+  async removeAllGames(): Promise<{ message: string }> {
+    try {
+      await this.gameService.removeAllGames();
+      return { message: 'succes' };
+    } catch (error) {
+      throw new Error('Failed to remove all games');
+    }
+  }
+
   @Post('guess/:gameId')
   async guessNumber(
     @Param('gameId') gameId: number,

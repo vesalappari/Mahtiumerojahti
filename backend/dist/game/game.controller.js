@@ -23,6 +23,15 @@ let GameController = class GameController {
         const game = await this.gameService.createGame();
         return { gameId: game.id };
     }
+    async removeAllGames() {
+        try {
+            await this.gameService.removeAllGames();
+            return { message: 'succes' };
+        }
+        catch (error) {
+            throw new Error('Failed to remove all games');
+        }
+    }
     async guessNumber(gameId, guess) {
         const result = await this.gameService.checkGuess(gameId, guess);
         return {
@@ -47,6 +56,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "startGame", null);
+__decorate([
+    (0, common_1.Post)('clear-all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], GameController.prototype, "removeAllGames", null);
 __decorate([
     (0, common_1.Post)('guess/:gameId'),
     __param(0, (0, common_1.Param)('gameId')),

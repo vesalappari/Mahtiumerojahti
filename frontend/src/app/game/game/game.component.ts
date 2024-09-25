@@ -52,7 +52,7 @@ export class GameComponent implements OnInit {
     this.showModal = false;
     if (this.gameId && this.guess) {
       if (this.guess < 1 || this.guess > 100) {
-        this.showModalMessage(this.languageService.getMessage('falseGuess'), 2000)
+        this.showModalMessage(this.languageService.getMessage('falseGuess'), 4000)
       } else {
         if (this.guess && this.gameRunning && !this.isInGuessed(this.guess)) {
           this.guessedNumbers.push(this.guess);

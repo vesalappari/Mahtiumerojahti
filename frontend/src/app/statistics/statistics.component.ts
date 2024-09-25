@@ -10,9 +10,9 @@ import {LanguageService} from "../services/language.service";
 })
 export class StatisticsComponent implements OnInit {
 
-  totalCountOfGames: number | undefined;
-  allGames: any;
-  averageGuesses: string | undefined;
+  totalCountOfGames: number = 0;
+  allGames: any[] = [];
+  averageGuesses: number = 0;
 
   constructor(
     protected statisticsService: StatisticsService,
@@ -43,6 +43,17 @@ export class StatisticsComponent implements OnInit {
 
   private calculateAverageGuesses() {
     const totalAttempts = this.allGames.reduce((total: number, game: any) => total + game.attempts, 0);
-    this.averageGuesses = (totalAttempts / this.allGames.length).toFixed(0);
+    this.averageGuesses = (totalAttempts / this.allGames.length);
+  }
+
+  async clearAllGames() {
+    this.statisticsService.clearAllGames().subscribe(
+        (response) => {
+          this.update();
+        },
+        (error) => {
+          alert('Failed to clear all games');
+        }
+    );
   }
 }

@@ -1,3 +1,11 @@
-<p *ngIf="totalCountOfGames">{{languageService.getMessage('totalCountOfGames')}}: {{totalCountOfGames}}</p>
-<p *ngIf="allGames">{{ languageService.getMessage('averageGuesses')}}: {{averageGuesses}}</p>
+<button class="bg-red-500 rounded p-1 mx-1" (click)="clearAllGames()"
+        *ngIf="allGames.length > 0">{{ languageService.getMessage('clearAll') }}</button>
+<p *ngIf="totalCountOfGames > 0; else noTotalCount">{{languageService.getMessage('totalCountOfGames')}}: {{totalCountOfGames}}</p>
+<ng-template #noTotalCount>
+    <p>{{ languageService.getMessage('totalCountOfGames') }}: 0</p>
+</ng-template>
+<p *ngIf="allGames && averageGuesses > 0; else noGames">{{ languageService.getMessage('averageGuesses')}}: {{averageGuesses}}</p>
+<ng-template #noGames>
+    <p>{{ languageService.getMessage('averageGuesses') }}: 0</p>
+</ng-template>
 

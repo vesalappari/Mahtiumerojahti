@@ -14,4 +14,5 @@ export declare class GameService {
     removeUnfinishedGames(): Promise<void>;
     findAll(isGuessed: boolean): Promise<Game[]>;
     countGames(isGuessed: boolean): Promise<number>;
+    removeAllGames(): Promise<void>;
 }
