@@ -43,10 +43,14 @@ export class StatisticsComponent implements OnInit {
 
   private calculateAverageGuesses() {
     const totalAttempts = this.allGames.reduce((total: number, game: any) => total + game.attempts, 0);
-    this.averageGuesses = (totalAttempts / this.allGames.length);
+    if (this.allGames.length > 0) {
+      this.averageGuesses = Math.round(totalAttempts / this.allGames.length);
+    } else {
+      this.averageGuesses = 0;
+    }
   }
 
-  async clearAllGames() {
+  clearAllGames() {
     this.statisticsService.clearAllGames().subscribe(
         (response) => {
           this.update();
