@@ -13,6 +13,7 @@ export class StatisticsComponent implements OnInit {
   totalCountOfGames: number = 0;
   allGames: any[] = [];
   averageGuesses: number = 0;
+  showConfirmButton: boolean = false;
 
   constructor(
     protected statisticsService: StatisticsService,
@@ -59,5 +60,16 @@ export class StatisticsComponent implements OnInit {
           alert('Failed to clear all games');
         }
     );
+  }
+
+  showConfirm() {
+    this.showConfirmButton = true;
+    setTimeout(() => {
+      this.hideConfirm();
+    }, 4000);
+  }
+
+  hideConfirm() {
+    this.showConfirmButton = false;
   }
 }
