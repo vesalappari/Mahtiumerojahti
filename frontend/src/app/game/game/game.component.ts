@@ -110,6 +110,6 @@ export class GameComponent implements OnInit {
 
     setTimeout(() => {
       this.showWinningAnimation = false;
-    }, 5000);
+    }, 3500);
   }
 }

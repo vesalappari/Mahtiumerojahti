@@ -1,8 +1,8 @@
-<button class="bg-red-500 rounded p-1 mx-1 hover:bg-red-700"
+<button class="text-white bg-red-500 rounded p-1 mx-1 hover:bg-red-700"
         (click)="showConfirm()"
         *ngIf="allGames.length > 0 && !showConfirmButton">{{ languageService.getMessage('clearAll') }}
 </button>
-<button class="bg-red-500 rounded p-1 mx-1 hover:bg-red-700 animate-bounce"
+<button class="text-white bg-red-500 rounded p-1 mx-1 hover:bg-red-700 animate-bounce"
         (click)="clearAllGames()"
         *ngIf="allGames.length > 0 && showConfirmButton">{{ languageService.getMessage('confirm') }}!
 </button>
