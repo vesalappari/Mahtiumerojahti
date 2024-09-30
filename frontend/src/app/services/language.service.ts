@@ -32,6 +32,9 @@ export class LanguageService {
       falseGuess: 'Numeron tulee olla välillä 1-100',
       clearAll: 'Poista kaikki',
       confirm: 'Vahvista',
+      games: 'Pelit',
+      secretNumber: 'Salainen numero',
+      hide: 'Piilota',
     },
     en: {
       guideMessage: 'Guess a number between 1-100',
@@ -55,6 +58,9 @@ export class LanguageService {
       falseGuess: 'Number must be between 1-100',
       clearAll: 'Clear all',
       confirm: 'Confirm',
+      games: 'Games',
+      secretNumber: 'Secret Number',
+      hide: 'Hide',
     }
   };
 

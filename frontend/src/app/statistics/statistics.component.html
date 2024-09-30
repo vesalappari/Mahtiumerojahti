@@ -1,3 +1,8 @@
+<button class="text-white bg-yellow-500 rounded p-1 mx-1 hover:bg-yellow-700"
+        (click)="toggleListOfGames()"
+        *ngIf="allGames.length > 0">
+        {{languageService.getMessage('games')}}
+</button>
 <button class="text-white bg-red-500 rounded p-1 mx-1 hover:bg-red-700"
         (click)="showConfirm()"
         *ngIf="allGames.length > 0 && !showConfirmButton">{{ languageService.getMessage('clearAll') }}
@@ -6,12 +11,49 @@
         (click)="clearAllGames()"
         *ngIf="allGames.length > 0 && showConfirmButton">{{ languageService.getMessage('confirm') }}!
 </button>
-<p *ngIf="totalCountOfGames > 0; else noTotalCount">{{languageService.getMessage('totalCountOfGames')}}: {{totalCountOfGames}}</p>
+<p class="pt-1" *ngIf="totalCountOfGames > 0; else noTotalCount">{{languageService.getMessage('totalCountOfGames')}}: {{totalCountOfGames}}</p>
 <ng-template #noTotalCount>
-    <p>{{ languageService.getMessage('totalCountOfGames') }}: 0</p>
+    <p class="pt-1">{{ languageService.getMessage('totalCountOfGames') }}: 0</p>
 </ng-template>
 <p *ngIf="allGames && averageGuesses > 0; else noGames">{{ languageService.getMessage('averageGuesses')}}: {{averageGuesses}}</p>
 <ng-template #noGames>
     <p>{{ languageService.getMessage('averageGuesses') }}: 0</p>
 </ng-template>
+<div *ngIf="allGames.length > 0 && showListOfGames" class="mt-3">
+    <button
+            class="bg-blue-700 hover:bg-blue-900 rounded px-1 m-1 text-white"
+            (click)="toggleListOfGames()">
+        &bigwedge; {{ languageService.getMessage('hide') }}
+    </button>
+    <p *ngFor="let game of allGames.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)"
+       class="bg-gray-200 rounded p-1 my-0.5 text-xs flex justify-between items-center">
+        <span>
+            <span class="inline-block w-14">
+            Id: {{game.id}}
+            </span>
+            <span class="inline-block w-36">
+                {{languageService.getMessage('secretNumber')}}: {{game.secretNumber}}   
+            </span>                                                                     
+            <span class="inline-block w-20">                                            
+                {{languageService.getMessage('guesses')}}: {{game.attempts}}            
+            </span>                                                                     
+        </span>
+
+        <button class="text-white bg-red-500 rounded p-1 mr-0.5 hover:bg-red-700"
+                (click)="removeGame(game.id)">X</button>
+    </p>
+    <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
+            [disabled]="currentPage === 1"
+            (click)="currentPage = currentPage - 1">
+        &lang;
+    </button>
+    <span class="px-1" typeof="button"
+            *ngFor="let page of [].constructor(maxPage); let i = index" [ngClass]="{'text-white rounded bg-green-400 py-0.5': currentPage === i+1 }" (click)="currentPage = i + 1">{{ i + 1 }}</span>
+    <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
+            [disabled]="currentPage === maxPage"
+            (click)="currentPage = currentPage + 1">
+        &rang;
+    </button>
+</div>
+
 

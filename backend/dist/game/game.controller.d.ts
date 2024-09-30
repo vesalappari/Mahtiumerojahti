@@ -8,6 +8,9 @@ export declare class GameController {
     removeAllGames(): Promise<{
         message: string;
     }>;
+    removeOneGame(gameId: number): Promise<{
+        message: string;
+    }>;
     guessNumber(gameId: number, guess: number): Promise<{
         correct: boolean;
         close: boolean;

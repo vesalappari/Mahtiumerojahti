@@ -87,4 +87,15 @@ export class GameService {
       throw new Error('Failed to remove all games');
     }
   }
+
+  async removeOneGame(gameId: number): Promise<void> {
+    try {
+      const result = await this.gameRepository.delete(gameId);
+      if (!result.affected) {
+        throw new Error('No game found with this ID');
+      }
+    } catch (error) {
+      throw new Error('Failed to delete the game' + error.message);
+    }
+  }
 }

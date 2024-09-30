@@ -15,4 +15,5 @@ export declare class GameService {
     findAll(isGuessed: boolean): Promise<Game[]>;
     countGames(isGuessed: boolean): Promise<number>;
     removeAllGames(): Promise<void>;
+    removeOneGame(gameId: number): Promise<void>;
 }

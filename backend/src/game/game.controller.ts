@@ -1,4 +1,4 @@
-import { Controller, Post, Param, Body, Get } from '@nestjs/common';
+import { Controller, Post, Param, Body, Get, Delete } from '@nestjs/common';
 import { GameService } from './game.service';
 
 @Controller('game')
@@ -18,6 +18,18 @@ export class GameController {
       return { message: 'succes' };
     } catch (error) {
       throw new Error('Failed to remove all games');
+    }
+  }
+
+  @Delete(':id')
+  async removeOneGame(@Param('id') gameId:number): Promise<{ message:string }>
+  {
+    try {
+      await this.gameService.removeOneGame(gameId);
+      return { message: "Game deleted successfully" };
+
+    } catch(error) {
+      throw new Error ("Failed to delete the game" + error.message);
     }
   }
 

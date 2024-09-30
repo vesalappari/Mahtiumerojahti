@@ -32,6 +32,15 @@ let GameController = class GameController {
             throw new Error('Failed to remove all games');
         }
     }
+    async removeOneGame(gameId) {
+        try {
+            await this.gameService.removeOneGame(gameId);
+            return { message: "Game deleted successfully" };
+        }
+        catch (error) {
+            throw new Error("Failed to delete the game" + error.message);
+        }
+    }
     async guessNumber(gameId, guess) {
         const result = await this.gameService.checkGuess(gameId, guess);
         return {
@@ -62,6 +71,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "removeAllGames", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], GameController.prototype, "removeOneGame", null);
 __decorate([
     (0, common_1.Post)('guess/:gameId'),
     __param(0, (0, common_1.Param)('gameId')),

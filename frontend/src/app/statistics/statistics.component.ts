@@ -14,6 +14,9 @@ export class StatisticsComponent implements OnInit {
   allGames: any[] = [];
   averageGuesses: number = 0;
   showConfirmButton: boolean = false;
+  showListOfGames: boolean = false
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
 
   constructor(
     protected statisticsService: StatisticsService,
@@ -24,14 +27,22 @@ export class StatisticsComponent implements OnInit {
     this.update();
   }
 
-  update() {
+  async update() {
     this.getAllGames().subscribe(games => {
       this.allGames = games;
       this.calculateAverageGuesses();
+      this.checkCurrentPage();
     });
     this.getTotalCountOfGames().subscribe(totalCount => {
       this.totalCountOfGames = totalCount;
     });
+  }
+
+  checkCurrentPage(){
+    let maxPage = Math.ceil(this.allGames.length / this.itemsPerPage);
+    if(this.currentPage > maxPage){
+      this.currentPage = maxPage === 0 ? 1 : maxPage;
+    }
   }
 
   getTotalCountOfGames(): Observable<number> {
@@ -71,5 +82,22 @@ export class StatisticsComponent implements OnInit {
 
   hideConfirm() {
     this.showConfirmButton = false;
+  }
+
+  toggleListOfGames() {
+    this.showListOfGames = !this.showListOfGames;
+  }
+
+  removeGame(gameId: number) {
+    this.statisticsService.deleteGame(gameId).subscribe(
+        response => {
+          this.update();
+        },
+        error => alert('Failed to delete game')
+    );
+  }
+
+  get maxPage() {
+    return Math.ceil(this.allGames.length / this.itemsPerPage);
   }
 }

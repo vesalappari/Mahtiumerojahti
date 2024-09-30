@@ -14,7 +14,6 @@ export class StatisticsService {
   ) { }
 
   getAllGames(): Observable<{id: number, secretNumber: number, isGuessed: boolean, attempts: number}> {
-    //return this.http.get(`${this.apiUrl}`);
     return this.http.get<{id: number, secretNumber: number, isGuessed: boolean, attempts: number}>(`${this.apiUrl}`);
 
   }
@@ -25,6 +24,10 @@ export class StatisticsService {
 
   clearAllGames(): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`${this.apiUrl}/clear-all`, {});
+  }
+
+  deleteGame(gameId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${gameId}`);
   }
 
 }
