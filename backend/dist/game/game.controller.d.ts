@@ -1,8 +1,11 @@
 import { GameService } from './game.service';
+declare class StartGameDto {
+    userName: string;
+}
 export declare class GameController {
     private readonly gameService;
     constructor(gameService: GameService);
-    startGame(): Promise<{
+    startGame(body: StartGameDto): Promise<{
         gameId: number;
     }>;
     removeAllGames(): Promise<{
@@ -21,3 +24,4 @@ export declare class GameController {
     getAllGames(): Promise<import("./game.entity").Game[]>;
     getTotalGamesCount(): Promise<number>;
 }
+export {};

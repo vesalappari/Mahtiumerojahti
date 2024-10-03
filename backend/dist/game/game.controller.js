@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameController = void 0;
 const common_1 = require("@nestjs/common");
 const game_service_1 = require("./game.service");
+class StartGameDto {
+}
 let GameController = class GameController {
     constructor(gameService) {
         this.gameService = gameService;
     }
-    async startGame() {
-        const game = await this.gameService.createGame();
+    async startGame(body) {
+        const game = await this.gameService.createGame(body.userName);
         return { gameId: game.id };
     }
     async removeAllGames() {
@@ -61,8 +63,9 @@ let GameController = class GameController {
 exports.GameController = GameController;
 __decorate([
     (0, common_1.Post)('start'),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [StartGameDto]),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "startGame", null);
 __decorate([

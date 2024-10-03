@@ -1,5 +1,7 @@
 <div class="bg-green-400 flex justify-between items-center">
     <h1 class="p-2 text-3xl italic font-bold">Mahtinumerojahti</h1>
+    <button class="bg-blue-700 rounded px-1 text-white"
+            (click)="showUserAuth()">👤 {{currentUser?.userName}}</button>
     <div class="space-x-1 mr-5">
         <button
                 class="px-1 bg-blue-700 text-white rounded hover:bg-blue-900"
@@ -44,4 +46,5 @@
         <app-statistics></app-statistics>
     </div>
 </div>
-<app-game></app-game>
+<app-user-auth *ngIf="userService.showUserAuth"></app-user-auth>
+<app-game *ngIf="gameService.showGame && currentUser?.userName"></app-game>

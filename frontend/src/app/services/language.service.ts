@@ -35,6 +35,8 @@ export class LanguageService {
       games: 'Pelit',
       secretNumber: 'Salainen numero',
       hide: 'Piilota',
+      createNewUser: 'Luo uusi käyttäjä',
+      login: 'Kirjaudu sisään',
     },
     en: {
       guideMessage: 'Guess a number between 1-100',
@@ -61,6 +63,8 @@ export class LanguageService {
       games: 'Games',
       secretNumber: 'Secret Number',
       hide: 'Hide',
+      createNewUser: 'Create new user',
+      login: 'Login',
     },
     no: {
       guideMessage: 'Gjett et tall mellom 1-100',
@@ -87,6 +91,8 @@ export class LanguageService {
       games: 'Spill',
       secretNumber: 'Hemmelig tall',
       hide: 'Skjul',
+      createNewUser: 'Opprett ny bruker',
+      login: 'Logg inn',
     },
     es: {
       guideMessage: 'Adivina un número entre 1-100',
@@ -113,6 +119,8 @@ export class LanguageService {
       games: 'Juegos',
       secretNumber: 'Número secreto',
       hide: 'Ocultar',
+      createNewUser: 'Crear nuevo usuario',
+      login: 'Iniciar sesión',
     },
     el: {
       guideMessage: 'Μάντεψε έναν αριθμό μεταξύ 1-100',
@@ -139,6 +147,8 @@ export class LanguageService {
       games: 'Παιχνίδια',
       secretNumber: 'Μυστικός αριθμός',
       hide: 'Απόκρυψη',
+      createNewUser: 'Δημιουργία νέου χρήστη',
+      login: 'Σύνδεση',
     },
     ee: {
       guideMessage: 'Arva ära number vahemikus 1-100',
@@ -165,6 +175,8 @@ export class LanguageService {
       games: 'Mängud',
       secretNumber: 'Salajane number',
       hide: 'Peida',
+      createNewUser: 'Loo uus kasutaja',
+      login: 'Logi sisse',
     },
     sv: {
       guideMessage: 'Gissa ett nummer mellan 1-100',
@@ -191,6 +203,8 @@ export class LanguageService {
       games: 'Spel',
       secretNumber: 'Hemligt nummer',
       hide: 'Dölj',
+      createNewUser: 'Skapa ny användare',
+      login: 'Logga in',
     },
     id: {
       guideMessage: 'Tebak angka antara 1-100',
@@ -217,6 +231,8 @@ export class LanguageService {
       games: 'Permainan',
       secretNumber: 'Angka rahasia',
       hide: 'Sembunyikan',
+      createNewUser: 'Buat pengguna baru',
+      login: 'Masuk',
     },
     fr: {
       guideMessage: 'Devinez un nombre entre 1 et 100',
@@ -243,6 +259,8 @@ export class LanguageService {
       games: 'Jeux',
       secretNumber: 'Numéro secret',
       hide: 'Cacher',
+      createNewUser: 'Créer un nouvel utilisateur',
+      login: 'Connexion',
     },
     de: {
       guideMessage: 'Rate eine Zahl zwischen 1 und 100',
@@ -269,6 +287,8 @@ export class LanguageService {
       games: 'Spiele',
       secretNumber: 'Geheime Zahl',
       hide: 'Verbergen',
+      createNewUser: 'Neuen Benutzer erstellen',
+      login: 'Anmelden',
     },
     pl: {
       guideMessage: 'Zgadnij liczbę między 1 a 100',
@@ -295,6 +315,8 @@ export class LanguageService {
       games: 'Gry',
       secretNumber: 'Tajny numer',
       hide: 'Ukryj',
+      createNewUser: 'Utwórz nowego użytkownika',
+      login: 'Zaloguj się',
     },
     lt: {
       guideMessage: 'Atspėkite skaičių tarp 1 ir 100',
@@ -321,6 +343,8 @@ export class LanguageService {
       games: 'Žaidimai',
       secretNumber: 'Slaptas skaičius',
       hide: 'Paslėpti',
+      createNewUser: 'Sukurti naują vartotoją',
+      login: 'Prisijungti',
     },
     zh: {
       guideMessage: '猜一个1到100之间的数字',
@@ -347,6 +371,8 @@ export class LanguageService {
       games: '游戏',
       secretNumber: '秘密数字',
       hide: '隐藏',
+      createNewUser: '创建新用户',
+      login: '登录',
     },
     ja: {
       guideMessage: '1から100の間の数字を当ててください',
@@ -373,6 +399,8 @@ export class LanguageService {
       games: 'ゲーム',
       secretNumber: '秘密の数字',
       hide: '隠す',
+      createNewUser: '新しいユーザーを作成',
+      login: 'ログイン',
     }
   };
 

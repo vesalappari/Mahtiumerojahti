@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameModule } from './game/game.module';
 import { Game } from './game/game.entity';
+import {UserModule} from "./user/user.module";
+import {User} from "./user/user.entity";
 
 @Module({
   imports: [
@@ -14,10 +16,11 @@ import { Game } from './game/game.entity';
       username: 'postgres', // Postgres username
       password: 'password', // Postgres password, adjust it to your actual DB password
       database: 'guessing_game', // Name of your database
-      entities: [Game], // Entities to be used in your database
+      entities: [Game, User], // Entities to be used in your database
       synchronize: true, // Automatically syncs the database schema; disable in production
     }),
     GameModule,
+      UserModule
   ],
   controllers: [AppController],
   providers: [AppService],

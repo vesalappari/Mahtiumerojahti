@@ -3,4 +3,5 @@ export declare class Game {
     secretNumber: number;
     isGuessed: boolean;
     attempts: number;
+    userName: string;
 }

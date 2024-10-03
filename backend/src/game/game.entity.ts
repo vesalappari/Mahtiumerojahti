@@ -13,4 +13,7 @@ export class Game {
 
   @Column({ nullable: true })
   attempts: number;
+
+  @Column()
+  userName: string;
 }

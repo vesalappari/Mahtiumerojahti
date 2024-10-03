@@ -3,7 +3,7 @@ import { Game } from './game.entity';
 export declare class GameService {
     private gameRepository;
     constructor(gameRepository: Repository<Game>);
-    createGame(): Promise<Game>;
+    createGame(userName: string): Promise<Game>;
     checkGuess(gameId: number, guess: number): Promise<{
         correct: boolean;
         close: boolean;

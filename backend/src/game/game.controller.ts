@@ -1,13 +1,17 @@
 import { Controller, Post, Param, Body, Get, Delete } from '@nestjs/common';
 import { GameService } from './game.service';
 
+class StartGameDto {
+  userName: string;
+}
+
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
 
   @Post('start')
-  async startGame() {
-    const game = await this.gameService.createGame();
+  async startGame(@Body() body: StartGameDto) {
+    const game = await this.gameService.createGame(body.userName);
     return { gameId: game.id };
   }
 

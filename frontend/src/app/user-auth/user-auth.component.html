@@ -1,0 +1,75 @@
+<div class="mx-1 py-3">
+    <div *ngIf="isRegisterUserShown">
+        <form (submit)="registerUser()">
+            <div class="flex flex-col">
+                <div>
+                    <label class="inline-block w-24"
+                           for="registerUserName">Username:</label>
+                    <input class="border-2 border-blue-700 rounded mx-1"
+                           id="registerUserName"
+                           type="text"
+                           [(ngModel)]="registerUserName"
+                           name="registerUserName" required>
+                </div>
+                <div>
+                    <label class="inline-block w-24"
+                           for="registerPassword">Password:</label>
+                    <input class="border-2 border-blue-700 rounded mx-1"
+                           id="registerPassword"
+                           type="password"
+                           [(ngModel)]="registerPassword" name="registerPassword" required>
+                </div>
+                <div>
+                    <label class="inline-block w-24"
+                           for="isAdmin">Admin:</label>
+                    <input id="isAdmin" type="checkbox" [(ngModel)]="isAdmin" name="isAdmin">
+                </div>
+                <div>
+                    <button class="bg-blue-700 hover:bg-blue-900 rounded px-1 text-white"
+                            [disabled]="registerUserName.length < 1 || registerPassword.length < 1"
+                            type="submit">{{languageService.getMessage('createNewUser')}}</button>
+                </div>
+            </div>
+        </form>
+        <button
+                class="bg-blue-700 hover:bg-blue-900 rounded px-1 text-white mt-10"
+                (click)="showLoginUser()">{{languageService.getMessage('login')}}</button>
+    </div>
+
+    <div *ngIf="isLoginUserShown">
+        <form (submit)="loginUser()">
+            <div class="flex flex-col">
+                <div>
+                    <label class="inline-block w-24 my-1"
+                           for="loginUserName">Username:</label>
+                    <input
+                            class="border-2 border-blue-700 rounded my-1"
+                            id="loginUserName"
+                            type="text"
+                            [(ngModel)]="loginUserName"
+                            name="loginUserName" required>
+                </div>
+                <div>
+                    <label class="inline-block w-24 my-1"
+                           for="loginPassword">Password:</label>
+                    <input
+                            class="border-2 border-blue-700 rounded my-1"
+                            id="loginPassword"
+                            type="password"
+                            [(ngModel)]="loginPassword"
+                            name="loginPassword" required>
+                </div>
+                <div>
+                    <button class="bg-blue-700 hover:bg-blue-900 rounded px-1 text-white ml-24 my-2"
+                            [disabled]="loginUserName.length < 1 || loginPassword.length < 1"
+                            [ngClass]="{'bg-opacity-50': (loginUserName.length < 1 || loginPassword.length < 1)}"
+                            type="submit">{{languageService.getMessage('login')}}</button>
+                </div>
+            </div>
+        </form>
+        <button
+                class="bg-blue-700 hover:bg-blue-900 rounded px-1 text-white mt-10"
+                (click)="showRegisterUser()">{{languageService.getMessage('createNewUser')}}</button>
+    </div>
+    <p class="animate-pulse">{{ message }}</p>
+</div>

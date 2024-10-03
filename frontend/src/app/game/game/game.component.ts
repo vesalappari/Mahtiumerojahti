@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import { GameService } from "../../game.service";
 import { LanguageService } from "../../services/language.service";
 import confetti from "canvas-confetti";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'app-game',
@@ -19,25 +21,34 @@ export class GameComponent implements OnInit {
   showModal: boolean = false;
   modalMessage: string = '';
   showWinningAnimation: boolean = false;
+  currentUser: User | null = null;
 
   constructor(
     private gameService: GameService,
     protected languageService: LanguageService,
+    protected userService: UserService,
   ) {}
 
   ngOnInit() {
-    this.reset()
+    this.reset();
+    this.userService.currentUser.subscribe((user: User | null) => {
+      this.currentUser = user;
+    });
   }
 
   startGame() {
-    this.gameService.startGame().subscribe(data => {
-      this.gameId = data.gameId;
-      this.languageService.messageKey = this.languageService.getMessage('placeGuess');
-      this.attempts = 0;
-      this.guess = null;
-      this.guessedNumbers = [];
-      this.gameRunning = true;
-    });
+    if (this.currentUser?.userName) {
+      this.gameService.startGame(this.currentUser?.userName).subscribe(data => {
+        this.gameId = data.gameId;
+        this.languageService.messageKey = this.languageService.getMessage('placeGuess');
+        this.attempts = 0;
+        this.guess = null;
+        this.guessedNumbers = [];
+        this.gameRunning = true;
+      });
+    } else {
+      alert('Please set user before starting game')
+    }
   }
 
   reset() {

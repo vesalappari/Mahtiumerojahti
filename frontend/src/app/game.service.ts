@@ -7,13 +7,14 @@ import {Observable} from "rxjs";
 })
 export class GameService {
   private apiUrl = 'http://localhost:3000/game';
+  showGame: boolean = false;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  startGame(): Observable<{ gameId: number }> {
-    return this.http.post<{ gameId: number }>(`${this.apiUrl}/start`, {});
+    startGame(userName: string | undefined): Observable<{ gameId: number }> {
+    return this.http.post<{ gameId: number }>(`${this.apiUrl}/start`, {userName});
   }
 
   guessNumber(gameId: number, guess: number)

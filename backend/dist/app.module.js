@@ -13,6 +13,8 @@ const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const game_module_1 = require("./game/game.module");
 const game_entity_1 = require("./game/game.entity");
+const user_module_1 = require("./user/user.module");
+const user_entity_1 = require("./user/user.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -26,10 +28,11 @@ exports.AppModule = AppModule = __decorate([
                 username: 'postgres',
                 password: 'password',
                 database: 'guessing_game',
-                entities: [game_entity_1.Game],
+                entities: [game_entity_1.Game, user_entity_1.User],
                 synchronize: true,
             }),
             game_module_1.GameModule,
+            user_module_1.UserModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

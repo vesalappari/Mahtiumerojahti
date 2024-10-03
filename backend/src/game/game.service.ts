@@ -10,11 +10,12 @@ export class GameService {
     private gameRepository: Repository<Game>,
   ) {}
 
-  async createGame(): Promise<Game> {
+  async createGame(userName:string): Promise<Game> {
     await this.removeUnfinishedGames();
     const game = this.gameRepository.create({
       secretNumber: Math.floor(Math.random() * 100) + 1,
       attempts: 0,
+      userName,
     });
     return this.gameRepository.save(game);
   }

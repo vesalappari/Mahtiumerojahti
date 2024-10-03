@@ -30,6 +30,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], Game.prototype, "attempts", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Game.prototype, "userName", void 0);
 exports.Game = Game = __decorate([
     (0, typeorm_1.Entity)()
 ], Game);

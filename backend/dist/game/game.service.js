@@ -21,11 +21,12 @@ let GameService = class GameService {
     constructor(gameRepository) {
         this.gameRepository = gameRepository;
     }
-    async createGame() {
+    async createGame(userName) {
         await this.removeUnfinishedGames();
         const game = this.gameRepository.create({
             secretNumber: Math.floor(Math.random() * 100) + 1,
             attempts: 0,
+            userName,
         });
         return this.gameRepository.save(game);
     }
