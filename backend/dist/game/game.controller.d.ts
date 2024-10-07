@@ -23,5 +23,14 @@ export declare class GameController {
     }>;
     getAllGames(): Promise<import("./game.entity").Game[]>;
     getTotalGamesCount(): Promise<number>;
+    getStatistics(): Promise<{
+        averageOfGuesses: number;
+        totalGames: number;
+    }>;
+    getUserStatistics(userName: string): Promise<{
+        averageOfGuesses: number;
+        totalGames: number;
+    }>;
+    getAllGamesByUser(user: string): Promise<import("./game.entity").Game[]>;
 }
 export {};

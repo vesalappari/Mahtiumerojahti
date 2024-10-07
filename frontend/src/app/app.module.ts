@@ -8,6 +8,7 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { StatisticsComponent } from './statistics/statistics.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
+import { DasbboardComponent } from './dasbboard/dasbboard.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { UserAuthComponent } from './user-auth/user-auth.component';
     GameComponent,
     StatisticsComponent,
     UserAuthComponent,
+    DasbboardComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,21 +13,38 @@ export class StatisticsService {
     private http: HttpClient
   ) { }
 
-  getAllGames(): Observable<{id: number, secretNumber: number, isGuessed: boolean, attempts: number}> {
-    return this.http.get<{id: number, secretNumber: number, isGuessed: boolean, attempts: number}>(`${this.apiUrl}`);
-
+  getAllGames(): Observable<{id: number, userName: string, secretNumber: number, isGuessed: boolean, attempts: number}> {
+    return this.http.get<{id: number, userName: string, secretNumber: number, isGuessed: boolean, attempts: number}>(`${this.apiUrl}`);
   }
 
   getTotalCountOfGames(): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count`);
   }
 
+  getStatistics(): Observable<{ averageOfGuesses: number, totalGames: number }> {
+    return this.http.get<{ averageOfGuesses: number, totalGames: number }>(`${this.apiUrl}/stats-general`);
+  }
+
+  getUserStatistics(userName: string): Observable<{averageOfGuesses: number, totalGames: number}> {
+    return this.http.get<{averageOfGuesses: number, totalGames: number}>(`${this.apiUrl}/stats-user/${userName}`);
+  }
+  /*
+  getStatistics(): Observable<{ averageOfGuesses: number, totalGames: number }> {
+    return this.http.get<{ averageOfGuesses: number, totalGames: number }>(`${this.apiUrl}/stats`);
+  }
+
+   */
+
   clearAllGames(): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(`${this.apiUrl}/clear-all`, {});
   }
 
   deleteGame(gameId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${gameId}`);
+    return this.http.delete(`${this.apiUrl}/delete/${gameId}`);
   }
 
+
+  getAllGamesByUser(filterUserName: string) {
+    return this.http.get<{id: number, userName: string, secretNumber: number, isGuessed: boolean, attempts: number}>(`${this.apiUrl}/user/${filterUserName}`);
+  }
 }

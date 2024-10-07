@@ -13,7 +13,7 @@ export class GameService {
     private http: HttpClient
   ) { }
 
-    startGame(userName: string | undefined): Observable<{ gameId: number }> {
+  startGame(userName: string | undefined): Observable<{ gameId: number }> {
     return this.http.post<{ gameId: number }>(`${this.apiUrl}/start`, {userName});
   }
 

@@ -7,7 +7,7 @@ import {User} from "../models/user.model";
     providedIn: 'root',
 })
 export class UserService {
-    private apiUrl = 'http://localhost:3000/users'; // Update the URL as needed
+    private apiUrl = 'http://localhost:3000/users';
 
     public currentUser: BehaviorSubject<User | null>;
     showUserAuth: boolean = true;
@@ -35,5 +35,12 @@ export class UserService {
 
     setCurrentUser(resp:any) {
       this.currentUser.next(resp);
+    }
+
+    changePassword(userName: string, password: string, newPassword: string): Observable<any> {
+        return this.http.post(`${this.apiUrl}/change-password`,
+            {userNAme: userName,
+                password: password,
+                newPassword: newPassword});
     }
 }

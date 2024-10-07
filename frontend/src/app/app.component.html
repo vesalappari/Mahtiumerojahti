@@ -1,11 +1,33 @@
-<div class="bg-green-400 flex justify-between items-center">
-    <h1 class="p-2 text-3xl italic font-bold">Mahtinumerojahti</h1>
-    <button class="bg-blue-700 rounded px-1 text-white"
-            (click)="showUserAuth()">👤 {{currentUser?.userName}}</button>
+<div class="bg-green-400 flex justify-between items-center shadow-2xl">
+    <button class="px-1 m-1 text-2xl italic font-bold"
+        (click)="onToDashboard()">Mahtinumerojahti</button>
+    <button class="bg-blue-700 rounded px-1 text-white shadow"
+            [disabled]="!currentUser?.userName"
+            *ngIf="currentUser?.userName"
+            (click)="openUserModal()">👤 {{currentUser?.userName}}</button>
+    <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 shadow-2xl"
+         *ngIf="showUserModal">
+        <div class="bg-white p-5 rounded-lg shadow-lg w-3/4 max-w-lg">
+            <div class="bg-gray-300 p-1 my-1 text-center rounded">
+                <p>{{languageService.getMessage('username')}}: {{currentUser?.userName}}</p>
+            </div>
+            <button class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1"
+                    (click)="closeUserModal()">{{languageService.getMessage('close')}}</button>
+            <button class="bg-gray-800 hover:bg-black text-white rounded px-1 ml-1" (click)="openLogout()">Logout</button>
+            <div *ngIf="showLogout">
+                <p>Are you sure you want to logout?</p>
+                <button class="bg-green-400 hover:bg-green-700 text-white rounded px-1"
+                        (click)="logoutUser()">Yes</button>
+                <button class="bg-red-400 hover:bg-red-600 text-white rounded px-1 ml-1"
+                        (click)="closeUserModal()">No</button>
+            </div>
+        </div>
+    </div>
     <div class="space-x-1 mr-5">
         <button
-                class="px-1 bg-blue-700 text-white rounded hover:bg-blue-900"
-                (click)="openStatisticsModal()">
+                class="px-1 bg-blue-700 text-white rounded hover:bg-blue-900 shadow"
+                (click)="openStatisticsModal()"
+                *ngIf="currentUser?.userName">
             📊 {{ languageService.getMessage('stats') }}
         </button>
         <select
@@ -29,22 +51,19 @@
         </select>
     </div>
 </div>
-<div
-        *ngIf="showStatisticsModal"
-        [ngClass]="{
+<div *ngIf="showStatisticsModal && currentUser?.userName"
+     [ngClass]="{
     'opacity-100 scale-100': showStatisticsModal,
     'opacity-0 scale-90': !showStatisticsModal
-  }"
-        class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50"
->
+    }"
+     class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 shadow-2xl">
     <div class="bg-white p-5 rounded-lg shadow-lg w-3/4 max-w-lg">
-        <button
-                class="text-white p-1 bg-blue-700 rounded text-black hover:bg-blue-900"
+        <button class="text-white p-1 bg-blue-700 rounded text-black hover:bg-blue-900"
                 (click)="closeStatisticsModal()">
             &times; {{languageService.getMessage('close')}}
         </button>
         <app-statistics></app-statistics>
     </div>
 </div>
-<app-user-auth *ngIf="userService.showUserAuth"></app-user-auth>
-<app-game *ngIf="gameService.showGame && currentUser?.userName"></app-game>
+<router-outlet></router-outlet>
+

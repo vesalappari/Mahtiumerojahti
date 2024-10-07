@@ -1,64 +1,104 @@
-import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Observable, Subscription} from "rxjs";
 import {StatisticsService} from "../services/statistics.service";
 import {LanguageService} from "../services/language.service";
+import {UserService} from "../services/user.service";
+import {User} from "../models/user.model";
 
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
   styleUrl: './statistics.component.css'
 })
-export class StatisticsComponent implements OnInit {
+export class StatisticsComponent implements OnInit, OnChanges, OnDestroy{
 
-  totalCountOfGames: number = 0;
-  allGames: any[] = [];
-  averageGuesses: number = 0;
-  showConfirmButton: boolean = false;
-  showListOfGames: boolean = false
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
+  protected totalCountOfGames: number = 0;
+  protected games: any[] = [];
+  protected averageGuesses: number = 0;
+  protected showConfirmButton: boolean = false;
+  protected showListOfGames: boolean = false
+  protected currentPage: number = 1;
+  protected itemsPerPage: number = 5;
+  protected filterUserName: string = '';
+  public timeoutId: any | undefined;
+  protected currentUser: User | null = null;
+  protected statsSubscription!: Subscription;
 
   constructor(
     protected statisticsService: StatisticsService,
     protected languageService: LanguageService,
+    protected userService: UserService,
   ) {}
 
   async ngOnInit() {
-    this.update();
+    if (this.userService.currentUser) {
+      this.userService.currentUser.subscribe((user: User | null) => {
+        this.currentUser = user;
+      });
+    }
+    await this.update()
+    if (this.games) {
+      this.showListOfGames = true;
+    } else this.showListOfGames = false;
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['filterUserName']) {
+      this.currentPage = 1;
+    }
+  }
+
+  ngOnDestroy() {
+    this.statsSubscription && this.statsSubscription.unsubscribe();
+  }
+
+
   async update() {
-    this.getAllGames().subscribe(games => {
-      this.allGames = games;
-      this.calculateAverageGuesses();
+    this.getGames().subscribe(games => {
+      this.games = games;
       this.checkCurrentPage();
-    });
-    this.getTotalCountOfGames().subscribe(totalCount => {
-      this.totalCountOfGames = totalCount;
     });
   }
 
   checkCurrentPage(){
-    let maxPage = Math.ceil(this.allGames.length / this.itemsPerPage);
-    if(this.currentPage > maxPage){
-      this.currentPage = maxPage === 0 ? 1 : maxPage;
+    if (this.currentPage > this.maxPage) {
+      this.currentPage = this.maxPage, 0 ? 1 : this.maxPage;
     }
   }
 
-  getTotalCountOfGames(): Observable<number> {
-    return this.statisticsService.getTotalCountOfGames();
-  }
+  getStatistics() {
+    this.statsSubscription && this.statsSubscription.unsubscribe();
 
-  getAllGames(): Observable<any> {
-    return this.statisticsService.getAllGames();
-  }
-
-  private calculateAverageGuesses() {
-    const totalAttempts = this.allGames.reduce((total: number, game: any) => total + game.attempts, 0);
-    if (this.allGames.length > 0) {
-      this.averageGuesses = Math.round(totalAttempts / this.allGames.length);
+    if (this.filterUserName) {
+      this.statsSubscription = this.statisticsService.getUserStatistics(this.filterUserName).subscribe(
+          stats => {
+            this.averageGuesses = stats.averageOfGuesses;
+            this.totalCountOfGames = stats.totalGames;
+          });
     } else {
-      this.averageGuesses = 0;
+      this.statsSubscription = this.statisticsService.getStatistics().subscribe(
+          (stats) => {
+            this.averageGuesses = stats.averageOfGuesses;
+            this.totalCountOfGames = stats.totalGames;
+          });
+    }
+  }
+
+  getGames(): Observable<any> {
+    if (this.filterUserName) {
+      return this.statisticsService.getAllGamesByUser(this.filterUserName);
+    } else {
+      return this.statisticsService.getAllGames();
+    }
+  }
+
+  getFilteredGames() {
+    if (!this.filterUserName.trim()) {
+      this.getStatistics();
+      return this.games;
+    } else {
+      this.getStatistics();
+      return this.games.filter(game => game.userName.toLowerCase().includes(this.filterUserName.toLowerCase()));
     }
   }
 
@@ -84,11 +124,8 @@ export class StatisticsComponent implements OnInit {
     this.showConfirmButton = false;
   }
 
-  toggleListOfGames() {
-    this.showListOfGames = !this.showListOfGames;
-  }
-
-  removeGame(gameId: number) {
+  async removeGame(gameId: number) {
+    console.log(gameId);
     this.statisticsService.deleteGame(gameId).subscribe(
         response => {
           this.update();
@@ -98,6 +135,31 @@ export class StatisticsComponent implements OnInit {
   }
 
   get maxPage() {
-    return Math.ceil(this.allGames.length / this.itemsPerPage);
+    if (this.getFilteredGames().length > 0 || this.filterUserName.length > 0) {
+      return Math.ceil(this.getFilteredGames().length / this.itemsPerPage);
+    } else {
+      return Math.ceil(this.games.length / this.itemsPerPage);
+    }
+  }
+
+  public get allUserNames(): string[] {
+    const allUserNames = this.games?.map(game => game.userName);
+    return [...new Set(allUserNames)];
+  }
+
+  public startTimer(game: any): void {
+    this.timeoutId = setTimeout(() => {
+      game.isHovered = true;
+    }, 1000);
+  }
+
+  public stopTimer(): void {
+    clearTimeout(this.timeoutId);
+    this.getFilteredGames().forEach(game => game.isHovered = false);
+  }
+
+  clearFilterUserName() {
+    this.filterUserName = '';
+    this.currentPage = 1;
   }
 }

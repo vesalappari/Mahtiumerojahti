@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { GameService } from "../../game.service";
 import { LanguageService } from "../../services/language.service";
 import confetti from "canvas-confetti";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-game',
@@ -27,6 +28,7 @@ export class GameComponent implements OnInit {
     private gameService: GameService,
     protected languageService: LanguageService,
     protected userService: UserService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -122,5 +124,9 @@ export class GameComponent implements OnInit {
     setTimeout(() => {
       this.showWinningAnimation = false;
     }, 3500);
+  }
+
+  goToDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -4,7 +4,7 @@ import {StatisticsService} from "./services/statistics.service";
 import {UserService} from "./services/user.service";
 import {User} from "./models/user.model";
 import {GameService} from "./game.service";
-
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -15,12 +15,15 @@ export class AppComponent implements OnInit {
   title = 'Mahtinumerojahti';
   showStatisticsModal: boolean = false;
   currentUser: User | null = null;
+  showUserModal: boolean = false;
+  showLogout: boolean = false;
 
   constructor(
-    protected languageService: LanguageService,
-    protected statisticsService: StatisticsService,
-    protected userService: UserService,
-    protected gameService: GameService,
+      protected languageService: LanguageService,
+      protected statisticsService: StatisticsService,
+      protected userService: UserService,
+      protected gameService: GameService,
+      private router: Router,
   ) {}
 
   ngOnInit() {
@@ -30,6 +33,25 @@ export class AppComponent implements OnInit {
     this.userService.currentUser.subscribe((user: User | null) => {
       this.currentUser = user;
     });
+    if (!this.currentUser?.userName) {
+      this.router.navigate(['/dashboard']);
+    }
+
+  }
+
+  openUserModal() {
+    this.showUserModal = true;
+  }
+
+  closeUserModal() {
+    this.showUserModal = false;
+    this.closeLogout();
+  }
+
+  logoutUser() {
+    this.userService.setCurrentUser(null);
+    this.closeUserModal();
+    this.router.navigate(['/login']);
   }
 
   changeLanguage(event: Event) {
@@ -47,5 +69,17 @@ export class AppComponent implements OnInit {
 
   showUserAuth() {
     this.userService.showUserAuth = true;
+  }
+
+  openLogout() {
+    this.showLogout = true;
+  }
+
+  closeLogout() {
+    this.showLogout = false;
+  }
+
+  onToDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 }

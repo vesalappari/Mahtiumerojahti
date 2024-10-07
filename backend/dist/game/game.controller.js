@@ -59,6 +59,15 @@ let GameController = class GameController {
     async getTotalGamesCount() {
         return this.gameService.countGames(true);
     }
+    async getStatistics() {
+        return this.gameService.getStatistics();
+    }
+    async getUserStatistics(userName) {
+        return this.gameService.getUserStatistics(userName);
+    }
+    async getAllGamesByUser(user) {
+        return this.gameService.getGamesByUser(user);
+    }
 };
 exports.GameController = GameController;
 __decorate([
@@ -75,7 +84,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "removeAllGames", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -101,6 +110,26 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "getTotalGamesCount", null);
+__decorate([
+    (0, common_1.Get)('stats-general'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], GameController.prototype, "getStatistics", null);
+__decorate([
+    (0, common_1.Get)('stats-user/:userName'),
+    __param(0, (0, common_1.Param)('userName')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], GameController.prototype, "getUserStatistics", null);
+__decorate([
+    (0, common_1.Get)('user-games/:userName'),
+    __param(0, (0, common_1.Param)('userName')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], GameController.prototype, "getAllGamesByUser", null);
 exports.GameController = GameController = __decorate([
     (0, common_1.Controller)('game'),
     __metadata("design:paramtypes", [game_service_1.GameService])

@@ -25,7 +25,7 @@ export class GameController {
     }
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   async removeOneGame(@Param('id') gameId:number): Promise<{ message:string }>
   {
     try {
@@ -60,5 +60,20 @@ export class GameController {
   @Get('count')
   async getTotalGamesCount(): Promise<number> {
     return this.gameService.countGames(true);
+  }
+
+  @Get('stats-general')
+  async getStatistics() {
+    return this.gameService.getStatistics();
+  }
+
+  @Get('stats-user/:userName')
+  async getUserStatistics(@Param('userName') userName: string) {
+    return this.gameService.getUserStatistics(userName);
+  }
+
+  @Get('user-games/:userName')
+  async getAllGamesByUser(@Param('userName') user: string) {
+    return this.gameService.getGamesByUser(user);
   }
 }

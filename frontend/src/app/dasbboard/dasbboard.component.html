@@ -1,0 +1,14 @@
+<div class="p-5 m-5 bg-gray-300 rounded-xl shadow-2xl">
+    <div *ngIf="currentUser?.userName; else goToLogin">
+        <p>👤 {{currentUser?.userName}}</p>
+        <button class="rounded bg-blue-700 hover:bg-blue-900 text-white px-1"
+                (click)="onToGame()">Go to game</button>
+    </div>
+    <ng-template #goToLogin>
+        <p>You are not signed in</p>
+        <button class=" rounded bg-blue-700 hover:bg-blue-900 text-white px-1"
+                (click)="onToLogin()">Go to log in</button>
+    </ng-template>
+</div>
+
+

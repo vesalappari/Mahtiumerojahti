@@ -29,6 +29,21 @@ export class UserController {
         }
     }
 
+    @Post('change-password')
+    async changePassword(
+        @Body('userName') userName: string,
+        @Body('password') password: string,
+        @Body('newPassword') newPassword: string,
+    ) {
+        const user = await this.userService.validateUser(userName, password);
+        if (user) {
+            const updatedUser = await this.userService.updateUserPassword(user.id, newPassword);
+            return { message: 'Password changed successfully', user: updatedUser };
+        } else {
+            return { message: 'Invalid credentials' };
+        }
+    }
+
     // Get all users
     @Get()
     async findAll() {

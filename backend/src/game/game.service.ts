@@ -46,15 +46,9 @@ export class GameService {
 
     const correct = guess === game.secretNumber;
 
-    console.log('Secret number:', game.secretNumber);
-    console.log('Guess:', guess);
-    console.log('Difference:', Math.abs(game.secretNumber - guess));
-
     const close = Math.abs(game.secretNumber - guess) <= 5;
     const lower = guess < game.secretNumber;
     const higher = guess > game.secretNumber;
-
-    console.log('Close:', close);
 
     if (correct) {
       game.isGuessed = true;
@@ -72,6 +66,9 @@ export class GameService {
   findAll(isGuessed: boolean) {
     return this.gameRepository.find({
       where: { isGuessed },
+      order: {
+        id: 'DESC'
+      }
     });
   }
 
@@ -89,6 +86,29 @@ export class GameService {
     }
   }
 
+  async getStatistics(): Promise<{ averageOfGuesses: number; totalGames: number}> {
+    const games = await this.gameRepository.find({where: {isGuessed: true}});
+    const totalGames = games.length;
+    const totalGuesses = games.reduce((acc, game) => acc + game.attempts, 0);
+    const averageOfGuesses = totalGames > 0 ? Math.round(totalGuesses / totalGames) : 0;
+
+    return { averageOfGuesses, totalGames};
+
+  }
+
+  async getUserStatistics(user: string): Promise<{ averageOfGuesses: number; totalGames: number }> {
+    const games = await this.gameRepository.find({ where: { userName: user, isGuessed: true } });
+    const totalGames = games.length;
+    const totalGuesses = games.reduce((acc, game) => acc + game.attempts, 0);
+    const averageOfGuesses = totalGames > 0 ? Math.round(totalGuesses / totalGames) : 0;
+
+    return { averageOfGuesses, totalGames };
+  }
+
+  async getGamesByUser(user: string): Promise<Game[]> {
+    return this.gameRepository.find({ where: {userName: user, isGuessed: true}});
+  }
+
   async removeOneGame(gameId: number): Promise<void> {
     try {
       const result = await this.gameRepository.delete(gameId);
@@ -96,7 +116,13 @@ export class GameService {
         throw new Error('No game found with this ID');
       }
     } catch (error) {
-      throw new Error('Failed to delete the game' + error.message);
+      if (error.name === 'QueryFailedError') {
+        throw new Error('Database query failed while trying to delete the game: ' + error.message);
+      } else if (error.name === 'NotFoundError') {
+        throw new Error('No game found with this ID: ' + error.message);
+      } else {
+        throw new Error('An error occurred while trying to delete the game: ' + error.message);
+      }
     }
   }
 }
