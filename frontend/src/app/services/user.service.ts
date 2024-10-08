@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from "../models/user.model";
 
@@ -39,8 +39,20 @@ export class UserService {
 
     changePassword(userName: string, password: string, newPassword: string): Observable<any> {
         return this.http.post(`${this.apiUrl}/change-password`,
-            {userNAme: userName,
+            {userName: userName,
                 password: password,
                 newPassword: newPassword});
+    }
+
+    getUsers() {
+        return this.http.get(`${this.apiUrl}/all-users`);
+    }
+
+    updateUser(id: number, userName: string, isAdmin: boolean): Observable<any> {
+        const params = new HttpParams()
+            .set('id', id)
+            .set('userName', userName)
+            .set('isAdmin', isAdmin.toString());
+        return this.http.put(`${this.apiUrl}/${id}`, params);
     }
 }

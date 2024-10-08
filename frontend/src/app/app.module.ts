@@ -9,6 +9,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { StatisticsComponent } from './statistics/statistics.component';
 import { UserAuthComponent } from './user-auth/user-auth.component';
 import { DasbboardComponent } from './dasbboard/dasbboard.component';
+import { UserControlComponent } from './user-control/user-control.component';
+import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { DasbboardComponent } from './dasbboard/dasbboard.component';
     StatisticsComponent,
     UserAuthComponent,
     DasbboardComponent,
+    UserControlComponent,
+    AdminSettingsComponent,
   ],
   imports: [
     BrowserModule,

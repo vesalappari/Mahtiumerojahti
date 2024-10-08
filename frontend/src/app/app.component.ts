@@ -43,16 +43,19 @@ export class AppComponent implements OnInit {
     this.showUserModal = true;
   }
 
+
   closeUserModal() {
     this.showUserModal = false;
     this.closeLogout();
   }
-
+/*
   logoutUser() {
     this.userService.setCurrentUser(null);
     this.closeUserModal();
     this.router.navigate(['/login']);
   }
+
+   */
 
   changeLanguage(event: Event) {
     const selectedLanguage = (event.target as HTMLSelectElement).value;
@@ -71,9 +74,12 @@ export class AppComponent implements OnInit {
     this.userService.showUserAuth = true;
   }
 
+  /*
   openLogout() {
     this.showLogout = true;
   }
+
+   */
 
   closeLogout() {
     this.showLogout = false;

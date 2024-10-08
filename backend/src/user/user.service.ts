@@ -41,8 +41,13 @@ export class UserService {
         const user = await this.userRepository.findOne({ where: { id } });
         if (user) {
             user.userName = userName;
-            user.isAdmin = isAdmin;
-            return this.userRepository.save(user);
+            user.isAdmin = typeof isAdmin === 'boolean' ? isAdmin : (isAdmin === 'true');
+            try {
+                const result = await this.userRepository.save(user);
+                return result;
+            } catch (err) {
+                console.error(err);
+            }
         }
         throw new Error('User not found');
     }
@@ -52,11 +57,12 @@ export class UserService {
     }
 
     async updateUserPassword(userId: number, newPassword: string) {
-        const user = await this.userRepository.findOne({where:{id: userId}});
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+
         if (user) {
-            user.password = newPassword;
-            await user.hashPassword();
-            return this.userRepository.save(user);
+            user.password = await bcrypt.hash(newPassword, 10); // Hash the new password
+            await this.userRepository.save(user);
         }
+        return user;
     }
 }

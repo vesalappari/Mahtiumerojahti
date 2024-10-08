@@ -1,0 +1,9 @@
+<div *ngFor="let user of users">
+    <p class="bg-gray-200 rounded my-1 px-1">
+        <span class="inline-block w-14">🆔 {{user.id}}</span>
+        <span class="inline-block w-40">👤 {{user.userName}}</span>
+        <span class="inline-block w-24">Admin
+            <input type="checkbox" [id]="user.id" [(ngModel)]="user.isAdmin" (change)="updateUserAdminStatus(user)">
+        </span>
+    </p>
+</div>

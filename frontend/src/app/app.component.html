@@ -5,24 +5,7 @@
             [disabled]="!currentUser?.userName"
             *ngIf="currentUser?.userName"
             (click)="openUserModal()">👤 {{currentUser?.userName}}</button>
-    <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 shadow-2xl"
-         *ngIf="showUserModal">
-        <div class="bg-white p-5 rounded-lg shadow-lg w-3/4 max-w-lg">
-            <div class="bg-gray-300 p-1 my-1 text-center rounded">
-                <p>{{languageService.getMessage('username')}}: {{currentUser?.userName}}</p>
-            </div>
-            <button class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1"
-                    (click)="closeUserModal()">{{languageService.getMessage('close')}}</button>
-            <button class="bg-gray-800 hover:bg-black text-white rounded px-1 ml-1" (click)="openLogout()">Logout</button>
-            <div *ngIf="showLogout">
-                <p>Are you sure you want to logout?</p>
-                <button class="bg-green-400 hover:bg-green-700 text-white rounded px-1"
-                        (click)="logoutUser()">Yes</button>
-                <button class="bg-red-400 hover:bg-red-600 text-white rounded px-1 ml-1"
-                        (click)="closeUserModal()">No</button>
-            </div>
-        </div>
-    </div>
+
     <div class="space-x-1 mr-5">
         <button
                 class="px-1 bg-blue-700 text-white rounded hover:bg-blue-900 shadow"
@@ -65,5 +48,8 @@
         <app-statistics></app-statistics>
     </div>
 </div>
+<app-user-control *ngIf="showUserModal"
+                  [(showUserModal)]="showUserModal">
+</app-user-control>
 <router-outlet></router-outlet>
 

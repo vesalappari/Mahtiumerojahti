@@ -1,11 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import {Controller, Get, Post, Put, Body, Param, Delete} from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    // Create user
     @Post()
     async createUser(
         @Body('userName') userName: string,
@@ -15,7 +14,6 @@ export class UserController {
         return this.userService.createUser(userName, password, isAdmin);
     }
 
-    // Endpoint to log in a user
     @Post('login')
     async login(
         @Body('userName') userName: string,
@@ -38,25 +36,22 @@ export class UserController {
         const user = await this.userService.validateUser(userName, password);
         if (user) {
             const updatedUser = await this.userService.updateUserPassword(user.id, newPassword);
-            return { message: 'Password changed successfully', user: updatedUser };
+            return { message: 'success', user: updatedUser };
         } else {
-            return { message: 'Invalid credentials' };
+            return { message: 'failed' };
         }
     }
 
-    // Get all users
-    @Get()
+    @Get('all-users')
     async findAll() {
         return this.userService.findAll();
     }
 
-    // Get a single user by ID
     @Get(':id')
     async findOne(@Param('id') id: number) {
         return this.userService.findOne(id);
     }
 
-    // Update a user by ID
     @Put(':id')
     async updateUser(
         @Param('id') id: number,
@@ -66,7 +61,6 @@ export class UserController {
         return this.userService.updateUser(id, userName, isAdmin);
     }
 
-    // Delete a user by ID
     @Delete(':id')
     async deleteUser(@Param('id') id: number) {
         return this.userService.deleteUser(id);

@@ -1,0 +1,73 @@
+<div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 shadow-2xl">
+    <div class="bg-white p-5 rounded-lg shadow-lg w-3/4 max-w-lg">
+        <div class="bg-gray-300 p-1 my-1 text-center rounded">
+            <p class="text-2xl">👤 {{currentUser?.userName}}</p>
+        </div>
+        <button class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1"
+                (click)="closeUserModal()">X {{languageService.getMessage('close')}}</button>
+        <button class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1 ml-1"
+                (click)="openChangePassword()">Change password</button>
+        <button class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1 ml-1"
+                *ngIf="currentUser?.isAdmin"
+                (click)="openAdminSettings()">Admin</button>
+        <button class="bg-gray-800 hover:bg-black text-white rounded px-1 ml-1" (click)="openLogout()">Logout</button>
+        <div *ngIf="!showAdminSettings; else admin">
+            <div *ngIf="showLogout">
+                <p>Are you sure you want to logout?</p>
+                <button class="bg-green-400 hover:bg-green-700 text-white rounded px-1"
+                        (click)="logoutUser()">Yes</button>
+                <button class="bg-red-400 hover:bg-red-600 text-white rounded px-1 ml-1"
+                        (click)="closeUserModal()">No</button>
+            </div>
+            <div *ngIf="showChangePassword" class="fixed top-0 left-0 w-full h-full flex items-center justify-center shadow-2xl">
+                <div class="bg-white p-5 rounded-lg shadow-lg w-3/4 max-w-lg">
+                    <div class="mb-3">
+                        <input type="password"
+                               class="form-control rounded border-2 border-blue-700"
+                               id="currentPassword"
+                               placeholder="Current password"
+                               required
+                               [(ngModel)]="currentPassword">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password"
+                               class="form-control form-control rounded border-2 border-blue-700"
+                               id="newPassword"
+                               placeholder="New password"
+                               required
+                               [(ngModel)]="newPassword">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password"
+                               class="form-control form-control rounded border-2 border-blue-700"
+                               id="confirmNewPassword"
+                               placeholder="confirm new password"
+                               required
+                               [(ngModel)]="confirmPassword">
+                    </div>
+                    <p *ngIf="message; else noPasswordChangeMessage"
+                        class="bg-blue-700 text-white rounded px-1">{{message}}</p>
+                    <ng-template #noPasswordChangeMessage>
+                        <button class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1"
+                                (click)="changePassword()"
+                                [disabled]="currentPassword.length < 1 || newPassword.length < 1 || confirmPassword.length < 1"
+                                [ngClass]="{'bg-opacity-50': (currentPassword.length < 1 || newPassword.length < 1 || confirmPassword.length < 1)}"
+                        >Change Password</button>
+                        <button class="bg-red-400 hover:bg-red-600 text-white rounded px-1 ml-1" (click)="closeChangePassword()">Cancel</button>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+        <ng-template #admin>
+            <div class="my-3">
+                <button (click)="closeAdminSettings()"
+                        class="bg-blue-700 hover:bg-blue-900 text-white rounded px-1">
+                    {{languageService.getMessage('close')}}
+                </button>
+                <div class="my-3">
+                    <app-admin-settings [currentUser]="currentUser"></app-admin-settings>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
