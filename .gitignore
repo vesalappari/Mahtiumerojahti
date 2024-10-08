@@ -133,3 +133,6 @@ dist
 .angular
 /.idea
 /pgdata
+backend/dist/tsconfig.build.tsbuildinfo
+backend/dist/tsconfig.build.tsbuildinfo
+/backend/dist
