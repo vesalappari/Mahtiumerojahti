@@ -4,6 +4,12 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 
+class UserResponseObject {
+    id: number;
+    userName: string;
+    isAdmin: boolean;
+}
+
 @Injectable()
 export class UserService {
     constructor(
@@ -29,12 +35,16 @@ export class UserService {
         return null;
     }
 
-    async findAll(): Promise<User[]> {
-        return this.userRepository.find();
+    async findAll(): Promise<UserResponseObject[]> {
+        const users = await this.userRepository.find();
+        return users.map(user => ({ id: user.id, userName: user.userName, isAdmin: user.isAdmin }));
     }
 
-    async findOne(id: number): Promise<User | undefined> {
-        return this.userRepository.findOne({ where: { id } });
+    async findOne(id: number): Promise<UserResponseObject> {
+        const user = await this.userRepository.findOne({ where: { id } });
+        if (user) {
+            return { id: user.id, userName: user.userName, isAdmin: user.isAdmin };
+        }
     }
 
     async updateUser(id: number, userName: string, isAdmin: boolean): Promise<User> {

@@ -18,17 +18,14 @@ export class UserService {
         this.currentUser = new BehaviorSubject<User | null>(null);
     }
 
-    // Register a new user
     registerUser(user: User): Observable<User> {
         return this.http.post<User>(`${this.apiUrl}`, user);
     }
 
-    // Log in a user
     loginUser(userName: string, password: string): Observable<User> {
         return this.http.post<User>(`${this.apiUrl}/login`, { userName, password });
     }
 
-    // Get the current user
     getCurrentUser(): Observable<any> {
         return this.currentUser.asObservable();
     }
@@ -54,5 +51,10 @@ export class UserService {
             .set('userName', userName)
             .set('isAdmin', isAdmin.toString());
         return this.http.put(`${this.apiUrl}/${id}`, params);
+    }
+
+    isAdmin() {
+        const user = this.currentUser.getValue();
+        return user ? user.isAdmin : false;
     }
 }

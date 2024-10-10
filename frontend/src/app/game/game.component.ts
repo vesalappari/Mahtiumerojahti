@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { GameService } from "../../game.service";
-import { LanguageService } from "../../services/language.service";
+import { GameService } from "../game.service";
+import { LanguageService } from "../services/language.service";
 import confetti from "canvas-confetti";
-import {UserService} from "../../services/user.service";
-import {User} from "../../models/user.model";
+import {UserService} from "../services/user.service";
+import {User} from "../models/user.model";
 import {Router} from "@angular/router";
 
 @Component({
