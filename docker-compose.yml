@@ -3,9 +3,9 @@ services:
   postgres:
     image: postgres
     environment:
-      POSTGRES_DB: databesa_name
-      POSTGRES_USER: postgres_username
-      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: guessing_game
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:

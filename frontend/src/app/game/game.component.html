@@ -41,12 +41,12 @@
         <p
                 class="my-1"
                 *ngIf="attempts > 0">{{ languageService.getMessage('guesses') }}: {{attempts}}</p>
-        <div *ngIf="guessedNumbers.length > 0">
-      <span
-              *ngFor="let number of guessedNumbers"
-              class="inline-block w-8 text-center rounded border-black border bg-white text-bold p-0.5 mx-0.5 my-0.5">
-      {{number}}
-    </span>
+        <div *ngIf="guessedNumbers.length > 0"
+             class="flex flex-wrap w-80 justify-start">
+          <span *ngFor="let number of guessedNumbers"
+                  class="inline-block w-8 text-center rounded border-black border bg-white text-bold p-0.5 mx-0.5 my-0.5">
+          {{number}}
+          </span>
         </div>
 
     </div>
