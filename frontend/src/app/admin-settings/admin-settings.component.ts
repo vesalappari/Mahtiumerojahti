@@ -25,7 +25,7 @@ export class AdminSettingsComponent implements OnInit{
                 this.users = data;
             });
         } else {
-            console.error('Unauthorized access. Only admins can load user data.');
+            alert('Unauthorized access. Only admins can load user data.');
         }
     }
 

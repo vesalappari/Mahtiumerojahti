@@ -15,6 +15,7 @@ export class UserAuthComponent {
 
     registerUserName: string = '';
     registerPassword: string = '';
+    confirmPassword: string = '';
     isAdmin: boolean = false;
     isLoginUserShown: boolean = true;
     isRegisterUserShown: boolean = false;
@@ -40,35 +41,44 @@ export class UserAuthComponent {
             isAdmin: this.isAdmin,
         };
 
-        this.userService.registerUser(newUser).subscribe(
-            (response) => {
-                if (response)
-                this.message = `User ${response.userName} created ✅`;
-                setTimeout(() => {
-                    this.message = '';
-                    this.showLoginUser();
-                }, 3000);
-            },
-            (error) => {
-                this.message = `Error creating user 🚫`;
-                setTimeout(() => {
-                    this.message = '';
-                },3000);
-            }
-        );
+        if (this.registerPassword === this.confirmPassword) {
+            this.userService.registerUser(newUser).subscribe(
+                (response) => {
+                    if (response)
+                        this.message = `${this.languageService.getMessage('username')} ${response.userName} ${this.languageService.getMessage('created')} ✅`;
+                    setTimeout(() => {
+                        this.message = '';
+                        this.showLoginUser();
+                    }, 3000);
+                },
+                (error) => {
+                    this.message = `${this.languageService.getMessage('errorCreatingUser')} 🚫`;
+                    setTimeout(() => {
+                        this.message = '';
+                    },3000);
+                }
+            );
+        } else {
+            this.message = `${this.languageService.getMessage('passwordsDoNotMatch')} ❌`;
+            setTimeout(() => {
+                this.message = '';
+                this.registerPassword = '';
+                this.confirmPassword = '';
+            }, 3000);
+        }
     }
 
     loginUser() {
        this.userService.loginUser(this.loginUserName, this.loginPassword).subscribe(
             (response: any) => {
                 if (response.message === 'Login successful') {
-                    this.message = `${response.message} ✅`;
+                    this.message = `${this.languageService.getMessage('loginSuccessful')} ✅`;
                     setTimeout(() => {
                         this.userService.setCurrentUser(response.user);
                         this.router.navigate(['/dashboard']);
                     },3000);
                 } else {
-                    this.message = response.message + '🚫';
+                    this.message = `${this.languageService.getMessage('invalidCredentials')} 🚫`;
                     setTimeout(() =>{
                         this.message = '';
                     }, 3000);

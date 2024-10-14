@@ -78,7 +78,7 @@ export class UserControlComponent implements OnInit{
         this.userService.changePassword(userName, this.currentPassword, this.newPassword).subscribe(resp => {
           console.log('Message: ',resp.message)
           if (resp.message === 'success') {
-            this.message = 'Password changed ✅'
+            this.message = 'Password changed ✅';
             setTimeout(() => {
               this.resetPasswords();
               this.showChangePassword = false;

@@ -1,62 +1,60 @@
-<div class="flex-row items-center justify-center bg-gray-300 p-5 m-5 rounded-xl shadow-2xl">
-  <div *ngIf="showWinningAnimation" class="fixed inset-0 flex items-center justify-center z-50">
-    <div class="relative">
-      <h2 class="bg-green-400 p-1 rounded text-6xl font-bold text-black animate-bounce-slow ease-out">🎉 {{languageService.getMessage('winMessage')}} 🎉</h2>
-      <div class="absolute inset-0 overflow-hidden">
-        <div class="confetti"></div>
-      </div>
+<div class="flex flex-col items-center justify-center m-5 p-5 bg-gray-300 rounded-xl shadow-2xl">
+    <div *ngIf="showWinningAnimation" class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="relative">
+            <h2 class="bg-green-400 p-1 rounded text-6xl font-bold text-black animate-bounce-slow ease-out">🎉 {{languageService.getMessage('winMessage')}} 🎉</h2>
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="confetti"></div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div>
-    <h2 class="text-xl">{{ languageService.getMessage('guideMessage') }}</h2>
-    <button
-      *ngIf="!gameId"
-      class="text-white rounded bg-blue-700 p-1 hover:bg-blue-900"
-      (click)="startGame()">
-      {{ languageService.getMessage('startGame')}}
-    </button>
-    <button
-      *ngIf="gameId"
-      class="text-white rounded bg-blue-700 p-1 hover:bg-blue-900"
-      (click)="startGame()">
-      {{ languageService.getMessage('newGame')}}
-    </button>
-      <button class="text-white rounded bg-gray-700 p-1 ml-1 hover:bg-black"
-              (click)="goToDashboard()">{{languageService.getMessage('close')}}</button>
-  </div>
+    <div>
+        <h2 class="text-xl">{{ languageService.getMessage('guideMessage') }}</h2>
+        <button
+                *ngIf="!gameId"
+                class="text-white rounded bg-blue-700 p-1 hover:bg-blue-900"
+                (click)="startGame()">
+            {{ languageService.getMessage('startGame')}}
+        </button>
+        <button
+                *ngIf="gameId"
+                class="text-white rounded bg-blue-700 p-1 hover:bg-blue-900"
+                (click)="startGame()">
+            {{ languageService.getMessage('newGame')}}
+        </button>
+        <button class="text-white rounded bg-gray-700 p-1 ml-1 hover:bg-black"
+                (click)="goToDashboard()">{{languageService.getMessage('close')}}</button>
+    </div>
 
-  <div *ngIf="gameId" class="mt-8">
-    <p>{{languageService.getMessage(languageService.messageKey)}}</p>
-    <input
-      class="text-2xl rounded border-2 border-blue-700 pl-2 pr-2"
-      type="number"
-      (keydown.enter)="makeGuess()"
-      [placeholder]="languageService.getMessage('inputPlaceholder')"
-      [(ngModel)]="guess"/>
-    <button
-      class="text-white rounded bg-blue-700 p-1 ml-2 px-2 hover:bg-blue-900"
-      [ngClass]="{ 'animate-pulse': closeGuess}"
-      (click)="makeGuess()">
-      {{languageService.getMessage('guess')}}</button>
-    <p
-      class="my-1"
-      *ngIf="attempts > 0">{{ languageService.getMessage('guesses') }}: {{attempts}}</p>
-    <div *ngIf="guessedNumbers.length > 0">
+    <div *ngIf="gameId" class="mt-8">
+        <p>{{languageService.getMessage(languageService.messageKey)}}</p>
+        <input
+                class="text-2xl rounded border-2 border-blue-700 pl-2 pr-2"
+                type="number"
+                (keydown.enter)="makeGuess()"
+                [placeholder]="languageService.getMessage('inputPlaceholder')"
+                [(ngModel)]="guess"/>
+        <button
+                class="text-white rounded bg-blue-700 p-1 ml-2 px-2 hover:bg-blue-900"
+                [ngClass]="{ 'animate-pulse': closeGuess}"
+                (click)="makeGuess()">
+            {{languageService.getMessage('guess')}}</button>
+        <p
+                class="my-1"
+                *ngIf="attempts > 0">{{ languageService.getMessage('guesses') }}: {{attempts}}</p>
+        <div *ngIf="guessedNumbers.length > 0">
       <span
-        *ngFor="let number of guessedNumbers"
-        class="inline-block w-8 text-center rounded border-black border bg-white text-bold p-0.5 mx-0.5 my-0.5">
+              *ngFor="let number of guessedNumbers"
+              class="inline-block w-8 text-center rounded border-black border bg-white text-bold p-0.5 mx-0.5 my-0.5">
       {{number}}
     </span>
+        </div>
+
     </div>
-
-  </div>
 </div>
-
 <div
-  *ngIf="showModal"
-  class="ease-in-out fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-  <div class="bg-white p-5 rounded-lg shadow-lg">
-    <p>{{ modalMessage }}</p>
-  </div>
+        *ngIf="showModal"
+        class="ease-in-out fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-5 rounded-lg shadow-lg">
+        <p>{{ modalMessage }}</p>
+    </div>
 </div>
-

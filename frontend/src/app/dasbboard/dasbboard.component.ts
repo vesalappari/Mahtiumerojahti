@@ -15,7 +15,7 @@ export class DasbboardComponent implements OnInit{
 
   constructor(
       private userService: UserService,
-      private languageService: LanguageService,
+      protected languageService: LanguageService,
       private router: Router,
   ) {}
 

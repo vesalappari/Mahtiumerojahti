@@ -15,10 +15,19 @@
                         <input class="border-2 border-blue-700 rounded my-1"
                                id="registerPassword"
                                type="password"
-                               placeholder="{{languageService.getMessage('password')}}"
+                               placeholder="{{languageService.getMessage('newPassword')}}"
                                [(ngModel)]="registerPassword"
                                name="registerPassword" required>
                     </div>
+                    <div>
+                        <input class="border-2 border-blue-700 rounded my-1"
+                               id="confirmPassword"
+                               type="password"
+                               placeholder="{{languageService.getMessage('confirmNewPassword')}}"
+                               [(ngModel)]="confirmPassword"
+                               name="confirmPassword" required>
+                    </div>
+                    <!--
                     <div>
                         <label class="my-1"
                                for="isAdmin">Admin:</label>
@@ -27,6 +36,7 @@
                                type="checkbox"
                                [(ngModel)]="isAdmin" name="isAdmin">
                     </div>
+                    -->
                     <div *ngIf="message; else noMessage">
                         <p class="text-center text-white animate-fade-in bg-blue-700 px-1 rounded my-2">{{ message }}</p>
                     </div>
@@ -93,7 +103,7 @@
             </form>
 
             <button
-                    class="bg-blue-700 hover:bg-blue-900 rounded px-1 text-white text-xs mt-10"
+                    class="bg-blue-700 hover:bg-blue-900 rounded px-1 text-white text-xs mt-14"
                     (click)="showRegisterUser()"
                     [disabled]="message"
                     (mouseover)="hoveringOverCreateNewUserButton = true"

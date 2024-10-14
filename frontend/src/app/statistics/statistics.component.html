@@ -74,19 +74,33 @@
             </div>
         </div>
     </div>
-    <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
-            [disabled]="currentPage === 1"
-            (click)="currentPage = currentPage - 1">
-        &lang;
-    </button>
-    <button class="px-1 hover:bg-green-600 hover:rounded"
-          *ngFor="let page of [].constructor(maxPage); let i = index"
-          [ngClass]="{'text-white rounded bg-green-400 py-0.5': currentPage === i+1 }" (click)="currentPage = i + 1">{{ i + 1 }}</button>
-    <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
-            [disabled]="currentPage === maxPage"
-            (click)="currentPage = currentPage + 1">
-        &rang;
-    </button>
+    <div class="my-5">
+        <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
+                [disabled]="currentPage === 1"
+                (click)="currentPage = currentPage - 1">
+            &lang;
+        </button>
+        <span *ngIf="getVisiblePageNumbers()[0] > 1; else firstPage"
+                class="inline-block w-4">...</span>
+        <ng-template #firstPage>
+            <span class="inline-block w-4"></span>
+        </ng-template>
+        <button class="px-1 hover:bg-green-600 hover:rounded inline-block w-6"
+                *ngFor="let page of getVisiblePageNumbers()"
+                [ngClass]="{'text-white rounded bg-green-400 py-0.5': currentPage === page }"
+                (click)="currentPage = page">{{ page }}</button>
+        <span *ngIf="getVisiblePageNumbers()[getVisiblePageNumbers().length - 1] < maxPage; else lastPage"
+                class="inline-block w-4">...</span>
+        <ng-template #lastPage>
+            <span class="inline-block w-4"></span>
+        </ng-template>
+        <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
+                [disabled]="this.currentPage === maxPage"
+                (click)="currentPage = currentPage + 1">
+            &rang;
+        </button>
+    </div>
+
 </div>
 
 

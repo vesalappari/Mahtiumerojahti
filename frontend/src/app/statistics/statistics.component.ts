@@ -142,6 +142,32 @@ export class StatisticsComponent implements OnInit, OnChanges, OnDestroy{
     }
   }
 
+  getVisiblePageNumbers() {
+    let startPage: number;
+    let endPage: number;
+
+    if (this.maxPage <= 5) {
+      // less than 10 total pages so show all
+      startPage = 1;
+      endPage = this.maxPage;
+    } else {
+      // more than 10 total pages so calculate start and end pages
+      if (this.currentPage <= 3) {
+        startPage = 1;
+        endPage = 5;
+      } else if (this.currentPage + 2 >= this.maxPage) {
+        startPage = this.maxPage - 4;
+        endPage = this.maxPage;
+      } else {
+        startPage = this.currentPage - 2;
+        endPage = this.currentPage + 2;
+      }
+    }
+
+    let visiblePageNumbers = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
+    return visiblePageNumbers;
+  }
+
   public get allUserNames(): string[] {
     const allUserNames = this.games?.map(game => game.userName);
     return [...new Set(allUserNames)];
