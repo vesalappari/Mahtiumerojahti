@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LanguageService} from "./services/language.service";
 import {StatisticsService} from "./services/statistics.service";
 import {UserService} from "./services/user.service";
@@ -11,12 +11,13 @@ import {Router} from "@angular/router";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Mahtinumerojahti';
   showStatisticsModal: boolean = false;
   currentUser: User | null = null;
   showUserModal: boolean = false;
   showLogout: boolean = false;
+  tokenCheckInterval: any;
 
   constructor(
       protected languageService: LanguageService,
@@ -36,7 +37,16 @@ export class AppComponent implements OnInit {
     if (!this.currentUser?.userName) {
       this.router.navigate(['/dashboard']);
     }
+    this.tokenCheckInterval = setInterval(() => {
+      this.checkTokenExpiry();
+    }, 60000);
+    this.canActivate();
+  }
 
+  ngOnDestroy() {
+    if (this.tokenCheckInterval) {
+      clearInterval(this.tokenCheckInterval);
+    }
   }
 
   openUserModal() {
@@ -48,14 +58,18 @@ export class AppComponent implements OnInit {
     this.showUserModal = false;
     this.closeLogout();
   }
-/*
+
   logoutUser() {
-    this.userService.setCurrentUser(null);
+    this.userService.logoutUser();
     this.closeUserModal();
     this.router.navigate(['/login']);
   }
 
-   */
+  checkTokenExpiry() {
+    if (!this.userService.isAuthenticated()) {
+      this.logoutUser();  // Log out if token is expired
+    }
+  }
 
   changeLanguage(event: Event) {
     const selectedLanguage = (event.target as HTMLSelectElement).value;
@@ -74,18 +88,22 @@ export class AppComponent implements OnInit {
     this.userService.showUserAuth = true;
   }
 
-  /*
-  openLogout() {
-    this.showLogout = true;
-  }
-
-   */
-
   closeLogout() {
     this.showLogout = false;
   }
 
   onToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  async canActivate(): Promise<boolean> {
+    if (await this.userService.isAuthenticated()) {
+      return true;
+    } else {
+      // Token is expired or invalid, log out the user
+      this.logoutUser();
+      //alert('Session expired, please log in again.');
+      return false;
+    }
   }
 }

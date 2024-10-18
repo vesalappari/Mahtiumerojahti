@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
+import {JwtService} from "@nestjs/jwt";
 
 class UserResponseObject {
     id: number;
@@ -15,6 +16,7 @@ export class UserService {
     constructor(
         @InjectRepository(User)
         private userRepository: Repository<User>,
+        private jwtService: JwtService,
     ) {}
 
     async createUser(userName: string, password: string, isAdmin: boolean): Promise<User> {
@@ -33,6 +35,17 @@ export class UserService {
             return user;
         }
         return null;
+    }
+
+    async login(user: User) {
+        const payload = { username: user.userName, sub: user.id };
+        return {
+            access_token: this.jwtService.sign(payload),
+        };
+    }
+
+    async findById(id: number): Promise<User | undefined> {
+        return this.userRepository.findOne({ where: { id } });
     }
 
     async findAll(): Promise<UserResponseObject[]> {

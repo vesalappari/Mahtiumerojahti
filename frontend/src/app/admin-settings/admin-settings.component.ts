@@ -16,14 +16,22 @@ export class AdminSettingsComponent implements OnInit{
   ) {}
 
   async ngOnInit() {
-    await this.loadUsers();
+      this.loadUsers();
   }
 
     loadUsers() {
         if (this.userService.isAdmin()) {
-            this.userService.getUsers().subscribe((data: any) => {
-                this.users = data;
-            });
+            this.userService.getUsers().subscribe(
+                (data: any) => {
+                    this.users = data;
+                },
+                (error) => {
+                    alert('Failed to load users');
+                    if (error.status === 401) {
+                        alert('Unauthorized');
+                    }
+                }
+            );
         } else {
             alert('Unauthorized access. Only admins can load user data.');
         }

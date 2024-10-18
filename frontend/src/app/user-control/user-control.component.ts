@@ -45,7 +45,7 @@ export class UserControlComponent implements OnInit{
 
 
   logoutUser() {
-    this.userService.setCurrentUser(null);
+    this.userService.logoutUser();
     this.closeUserModal();
     this.router.navigate(['/login']);
   }
@@ -72,11 +72,9 @@ export class UserControlComponent implements OnInit{
       setTimeout(() => {
         this.message = '';
       },3000);
-    } else {
-      if (this.currentUser?.userName) {
+    } else if (this.currentUser?.userName) {
         const userName = this.currentUser.userName;
         this.userService.changePassword(userName, this.currentPassword, this.newPassword).subscribe(resp => {
-          console.log('Message: ',resp.message)
           if (resp.message === 'success') {
             this.message = 'Password changed ✅';
             setTimeout(() => {
@@ -97,7 +95,6 @@ export class UserControlComponent implements OnInit{
         }, error => {
           alert(error);
         });
-      }
     }
   }
 
@@ -105,6 +102,7 @@ export class UserControlComponent implements OnInit{
     this.password = '';
     this.newPassword = '';
     this.confirmPassword = '';
+    this.currentPassword = '';
     this.message = '';
   }
 

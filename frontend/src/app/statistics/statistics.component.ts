@@ -125,12 +125,11 @@ export class StatisticsComponent implements OnInit, OnChanges, OnDestroy{
   }
 
   async removeGame(gameId: number) {
-    console.log(gameId);
     this.statisticsService.deleteGame(gameId).subscribe(
         response => {
           this.update();
         },
-        error => alert('Failed to delete game')
+        error => alert(error)
     );
   }
 

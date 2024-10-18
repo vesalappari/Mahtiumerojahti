@@ -4,7 +4,6 @@ import {User} from "../models/user.model";
 import {GameService} from "../game.service";
 import {LanguageService} from "../services/language.service";
 import {Router} from "@angular/router";
-import {response} from "express";
 
 @Component({
   selector: 'app-user-auth',
@@ -35,6 +34,14 @@ export class UserAuthComponent {
     ) {}
 
     registerUser() {
+        if (!this.registerUserName || !this.registerPassword || !this.confirmPassword) {
+            this.message = `${this.languageService.getMessage('invalidCredentials')} 🚫`;
+            setTimeout(() => {
+                this.message = '';
+            }, 3000);
+            return;
+        }
+
         const newUser: User = {
             userName: this.registerUserName,
             password: this.registerPassword,
@@ -69,6 +76,41 @@ export class UserAuthComponent {
     }
 
     loginUser() {
+        if (!this.loginUserName || !this.loginPassword) {
+            this.message = `${this.languageService.getMessage('invalidCredentials')} 🚫`;
+            setTimeout(() => {
+                this.message = '';
+            })
+            return;
+        } else {
+            this.userService.loginUser(this.loginUserName, this.loginPassword).subscribe(
+                (response: any) => {
+                    if (response.token && response.user) {
+                        localStorage.setItem('authToken', response.token);
+                        this.message = `${this.languageService.getMessage('loginSuccessful')} ✅`;
+                        setTimeout(() => {
+                            this.userService.setCurrentUser(response);  // Pass the entire response now
+                            this.message = '';
+                            this.router.navigate(['/dashboard']);
+                        }, 3000);
+                    } else {
+                        this.message = `${this.languageService.getMessage('invalidCredentials')} 🚫`;
+                        setTimeout(() => {
+                            this.message = '';
+                        }, 3000);
+                    }
+                },
+                (error) => {
+                    this.message = `${this.languageService.getMessage('invalidCredentials')} 🚫`;
+                    setTimeout(() => {
+                        this.message = '';
+                    }, 3000);
+                }
+            );
+        }
+    }
+    /*
+    loginUser() {
        this.userService.loginUser(this.loginUserName, this.loginPassword).subscribe(
             (response: any) => {
                 if (response.message === 'Login successful') {
@@ -85,6 +127,8 @@ export class UserAuthComponent {
                 }
             });
     }
+
+     */
 
     showRegisterUser() {
         this.isLoginUserShown = false;
