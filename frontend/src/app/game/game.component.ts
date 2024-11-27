@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { GameService } from "../game.service";
+import { GameService } from "../services/game.service";
 import { LanguageService } from "../services/language.service";
 import confetti from "canvas-confetti";
 import {UserService} from "../services/user.service";
 import {User} from "../models/user.model";
 import {Router} from "@angular/router";
+import {StateService} from "../services/state.service";
 
 @Component({
   selector: 'app-game',
@@ -29,6 +30,7 @@ export class GameComponent implements OnInit {
     protected languageService: LanguageService,
     protected userService: UserService,
     private router: Router,
+    protected stateService: StateService,
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class GameComponent implements OnInit {
   }
 
   startGame() {
+    this.stateService.startLoading();
     if (this.currentUser?.userName) {
       this.gameService.startGame(this.currentUser?.userName).subscribe(data => {
         this.gameId = data.gameId;
@@ -47,6 +50,7 @@ export class GameComponent implements OnInit {
         this.guess = null;
         this.guessedNumbers = [];
         this.gameRunning = true;
+        this.stateService.stopLoading();
       });
     } else {
       alert('Please set user before starting game')

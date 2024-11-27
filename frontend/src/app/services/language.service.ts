@@ -53,7 +53,8 @@ export class LanguageService {
       created: 'luotiin',
       errorCreatingUser: 'Virhe käyttäjää luotaessa',
       cancel: 'Peruuta',
-      passwordsDoNotMatch: 'Salasanat eivät täsmää'
+      passwordsDoNotMatch: 'Salasanat eivät täsmää',
+      resetPassword: 'Nollaa salasana',
     },
     en: {
       guideMessage: 'Guess a number between 1-100',
@@ -99,6 +100,7 @@ export class LanguageService {
       errorCreatingUser: 'Error when creating user',
       cancel: 'Cancel',
       passwordsDoNotMatch: 'Passwords do not match',
+      resetPassword: 'Reset password',
     },
     no: {
       guideMessage: 'Gjett et tall mellom 1-100',
@@ -144,6 +146,7 @@ export class LanguageService {
       errorCreatingUser: 'Feil ved oppretting av bruker',
       cancel: 'Avbryt',
       passwordsDoNotMatch: 'Passordene stemmer ikke overens',
+      resetPassword: 'Tilbakestill passord',
     },
     es: {
       guideMessage: 'Adivina un número entre 1-100',
@@ -152,10 +155,10 @@ export class LanguageService {
       newGame: 'Nuevo juego',
       placeGuess: 'Haz tu adivinanza',
       guess: 'Adivinar',
-      correctGuess: '¡Correcto! Adivinaste con {attempts} intentos',
-      closeGuess: '¡Cerca!',
-      lowGuess: '¡Demasiado bajo! Intenta un número más alto.',
-      highGuess: '¡Demasiado alto! Intenta un número más bajo.',
+      correctGuess: 'Correcto! Adivinaste con {attempts} intentos',
+      closeGuess: 'Cerca!',
+      lowGuess: 'Demasiado bajo! Intenta un número más alto',
+      highGuess: 'Demasiado alto! Intenta un número más bajo',
       inputPlaceholder: 'Número 1-100',
       isGuessed: 'Ya adivinado, elige otro',
       gameOverMessage: 'El juego ha terminado, inicia un nuevo juego',
@@ -189,6 +192,7 @@ export class LanguageService {
       errorCreatingUser: 'Error al crear usuario',
       cancel: 'Cancelar',
       passwordsDoNotMatch: 'Las contraseñas no coinciden',
+      resetPassword: 'Restablecer contraseña',
     },
     ee: {
       guideMessage: 'Arva ära number vahemikus 1-100',
@@ -234,6 +238,7 @@ export class LanguageService {
       errorCreatingUser: 'Viga kasutaja loomisel',
       cancel: 'Tühista',
       passwordsDoNotMatch: 'Paroolid ei ühti',
+      resetPassword: 'Lähtesta parool',
     },
     sv: {
       guideMessage: 'Gissa ett nummer mellan 1-100',
@@ -279,6 +284,7 @@ export class LanguageService {
       errorCreatingUser: 'Fel vid skapande av användare',
       cancel: 'Avbryt',
       passwordsDoNotMatch: 'Lösenorden matchar inte',
+      resetPassword: 'Återställ lösenord',
     },
     fr: {
       guideMessage: 'Devinez un nombre entre 1 et 100',
@@ -324,6 +330,7 @@ export class LanguageService {
       errorCreatingUser: 'Erreur lors de la création de l\'utilisateur',
       cancel: 'Annuler',
       passwordsDoNotMatch: 'Les mots de passe ne correspondent pas',
+      resetPassword: 'Réinitialiser le mot de passe',
     },
     de: {
       guideMessage: 'Rate eine Zahl zwischen 1 und 100',
@@ -369,6 +376,7 @@ export class LanguageService {
       errorCreatingUser: 'Fehler beim Erstellen des Benutzers',
       cancel: 'Abbrechen',
       passwordsDoNotMatch: 'Die Passwörter stimmen nicht überein',
+      resetPassword: 'Passwort zurücksetzen',
     },
   }
   constructor() {}

@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     providedIn: 'root',
 })
 export class UserService {
-    private apiUrl = 'http://localhost:3000/users';
+    private apiUrl = 'http://192.168.1.108:3000/users';
 
     public currentUser: BehaviorSubject<User | null>;
     showUserAuth: boolean = true;
@@ -68,12 +68,13 @@ export class UserService {
     }
 
     changePassword(userName: string, password: string, newPassword: string): Observable<any> {
+        const headers = this.getAuthHeaders();
         return this.http.post(`${this.apiUrl}/change-password`,
             {
                 userName: userName,
                 password: password,
                 newPassword: newPassword
-            });
+            }, { headers });
     }
 
     getUsers(): Observable<any> {
@@ -91,6 +92,11 @@ export class UserService {
         return this.http.put(`${this.apiUrl}/${id}`, params, { headers });
     }
 
+    deleteUser(user: User) {
+        const headers = this.getAuthHeaders();
+        return this.http.delete(`${this.apiUrl}/${user.id}`, { headers });
+    }
+
     isAdmin() {
         const user = this.currentUser.getValue();
         return user ? user.isAdmin : false;
@@ -101,5 +107,10 @@ export class UserService {
         return new HttpHeaders({
             Authorization: `Bearer ${token}`,
         });
+    }
+
+    resetPassword(userId: number, newPassword: string) {
+        const headers = this.getAuthHeaders();
+        return this.http.post(`${this.apiUrl}/reset-password/${userId}`, {newPassword}, {headers});
     }
 }

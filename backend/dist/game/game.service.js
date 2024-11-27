@@ -22,7 +22,7 @@ let GameService = class GameService {
         this.gameRepository = gameRepository;
     }
     async createGame(userName) {
-        await this.removeUnfinishedGames();
+        await this.removeUnfinishedGames(userName);
         const game = this.gameRepository.create({
             secretNumber: Math.floor(Math.random() * 100) + 1,
             attempts: 0,
@@ -52,8 +52,8 @@ let GameService = class GameService {
         await this.gameRepository.save(game);
         return { correct, close, lower, higher, attempts: game.attempts };
     }
-    async removeUnfinishedGames() {
-        await this.gameRepository.delete({ isGuessed: false });
+    async removeUnfinishedGames(name) {
+        await this.gameRepository.delete({ isGuessed: false, userName: name });
     }
     findAll(isGuessed) {
         return this.gameRepository.find({

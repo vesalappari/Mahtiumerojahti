@@ -11,6 +11,7 @@ import { UserAuthComponent } from './user-auth/user-auth.component';
 import { DasbboardComponent } from './dasbboard/dasbboard.component';
 import { UserControlComponent } from './user-control/user-control.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
     DasbboardComponent,
     UserControlComponent,
     AdminSettingsComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,

@@ -93,7 +93,7 @@ export class UserControlComponent implements OnInit{
             }, 3000);
           }
         }, error => {
-          alert(error);
+          console.log(error);
         });
     }
   }

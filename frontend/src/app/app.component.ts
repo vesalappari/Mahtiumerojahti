@@ -3,8 +3,9 @@ import {LanguageService} from "./services/language.service";
 import {StatisticsService} from "./services/statistics.service";
 import {UserService} from "./services/user.service";
 import {User} from "./models/user.model";
-import {GameService} from "./game.service";
+import {GameService} from "./services/game.service";
 import {Router} from "@angular/router";
+import {StateService} from "./services/state.service";
 
 @Component({
   selector: 'app-root',
@@ -19,15 +20,16 @@ export class AppComponent implements OnInit, OnDestroy {
   showLogout: boolean = false;
   tokenCheckInterval: any;
 
+
   constructor(
       protected languageService: LanguageService,
-      protected statisticsService: StatisticsService,
       protected userService: UserService,
-      protected gameService: GameService,
       private router: Router,
+      protected stateService: StateService,
   ) {}
 
   ngOnInit() {
+    this.stateService.startLoading();
     this.languageService.currentLanguage.subscribe(language => {
       this.title = this.languageService.getMessage(this.languageService.messageKey);
     });
@@ -40,7 +42,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.tokenCheckInterval = setInterval(() => {
       this.checkTokenExpiry();
     }, 60000);
-    this.canActivate();
+    this.canActivate().finally(() => {
+      this.stateService.stopLoading();
+    });
   }
 
   ngOnDestroy() {

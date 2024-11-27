@@ -6,6 +6,7 @@ import { GameModule } from './game/game.module';
 import { Game } from './game/game.entity';
 import {UserModule} from "./user/user.module";
 import {User} from "./user/user.entity";
+import {AdminSeederService} from './seeder/seeder.service';
 
 @Module({
   imports: [
@@ -23,6 +24,6 @@ import {User} from "./user/user.entity";
       UserModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AdminSeederService],
 })
 export class AppModule {}

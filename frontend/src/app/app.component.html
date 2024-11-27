@@ -1,11 +1,11 @@
 <div class="bg-green-400 flex justify-between items-center shadow-2xl">
-    <button class="px-1 m-1 text-2xl italic font-bold"
+    <button class="px-1 m-1 italic font-bold"
         (click)="onToDashboard()">Mahtinumerojahti</button>
     <button class="bg-blue-700 rounded px-1 text-white shadow"
             [disabled]="!currentUser?.userName"
             *ngIf="currentUser?.userName"
-            (click)="openUserModal()">👤 {{currentUser?.userName}}</button>
-
+            (click)="openUserModal()">👤 {{currentUser?.userName}}
+    </button>
     <div class="space-x-1 mr-5">
         <button
                 class="px-1 bg-blue-700 text-white rounded hover:bg-blue-900 shadow"
@@ -45,4 +45,5 @@
                   [(showUserModal)]="showUserModal">
 </app-user-control>
 <router-outlet></router-outlet>
+<app-spinner></app-spinner>
 

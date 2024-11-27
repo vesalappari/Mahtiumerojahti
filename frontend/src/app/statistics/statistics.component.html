@@ -50,17 +50,17 @@
         <span class="inline-block w-12">
         🎮 {{game.id}}
         </span>
-        <span class="inline-block w-28">
+        <span class="inline-block w-24">
             👤{{game.userName}}
         </span>
         <span class="inline-block w-14">
             🎯: {{game.secretNumber}}
         </span>
-        <span class="inline-block w-12">
+        <span class="inline-block w-10">
             🔮: {{game.attempts}}
         </span>
     </span>
-        <button class="text-white bg-red-500 rounded p-1 mr-2 hover:bg-red-700"
+        <button class="text-white bg-red-500 rounded p-1 mr-1 hover:bg-red-700"
                 *ngIf="currentUser?.isAdmin"
                 (click)="removeGame(game.id)">X</button>
 
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    <div class="my-5">
+    <div class="my-14">
         <button class="px-0.5 rounded m-1 bg-blue-700 hover:bg-blue-900 w-5"
                 [disabled]="currentPage === 1"
                 (click)="currentPage = currentPage - 1">

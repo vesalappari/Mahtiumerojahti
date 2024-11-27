@@ -34,7 +34,7 @@
                 [placeholder]="languageService.getMessage('inputPlaceholder')"
                 [(ngModel)]="guess"/>
         <button
-                class="text-white rounded bg-blue-700 p-1 ml-2 px-2 hover:bg-blue-900"
+                class="text-white rounded bg-blue-700 p-1 ml-2 px-2 hover:bg-blue-900 my-2"
                 [ngClass]="{ 'animate-pulse': closeGuess}"
                 (click)="makeGuess()">
             {{languageService.getMessage('guess')}}</button>

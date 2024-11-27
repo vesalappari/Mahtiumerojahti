@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameController = void 0;
 const common_1 = require("@nestjs/common");
 const game_service_1 = require("./game.service");
+const jwt_auth_guard_1 = require("../user/jwt-auth.guard");
+const admin_guard_1 = require("../user/admin.guard");
 class StartGameDto {
 }
 let GameController = class GameController {
@@ -28,7 +30,7 @@ let GameController = class GameController {
     async removeAllGames() {
         try {
             await this.gameService.removeAllGames();
-            return { message: 'succes' };
+            return { message: 'success' };
         }
         catch (error) {
             throw new Error('Failed to remove all games');
@@ -37,7 +39,7 @@ let GameController = class GameController {
     async removeOneGame(gameId) {
         try {
             await this.gameService.removeOneGame(gameId);
-            return { message: "Game deleted successfully" };
+            return { message: "success" };
         }
         catch (error) {
             throw new Error("Failed to delete the game" + error.message);
@@ -71,6 +73,7 @@ let GameController = class GameController {
 };
 exports.GameController = GameController;
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('start'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -78,12 +81,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "startGame", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, admin_guard_1.AdminGuard),
     (0, common_1.Post)('clear-all'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "removeAllGames", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, admin_guard_1.AdminGuard),
     (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -91,6 +96,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "removeOneGame", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Post)('guess/:gameId'),
     __param(0, (0, common_1.Param)('gameId')),
     __param(1, (0, common_1.Body)('guess')),
@@ -99,24 +105,28 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "guessNumber", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], GameController.prototype, "getAllGames", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('count'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "getTotalGamesCount", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('stats-general'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "getStatistics", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('stats-user/:userName'),
     __param(0, (0, common_1.Param)('userName')),
     __metadata("design:type", Function),
@@ -124,6 +134,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], GameController.prototype, "getUserStatistics", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
     (0, common_1.Get)('user-games/:userName'),
     __param(0, (0, common_1.Param)('userName')),
     __metadata("design:type", Function),

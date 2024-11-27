@@ -60,6 +60,10 @@ export class UserService {
         }
     }
 
+    async findByUserName(name: string): Promise<User | undefined> {
+        return this.userRepository.findOne({ where: { userName: name } });
+    }
+
     async updateUser(id: number, userName: string, isAdmin: boolean): Promise<User> {
         const user = await this.userRepository.findOne({ where: { id } });
         if (user) {
@@ -83,7 +87,7 @@ export class UserService {
         const user = await this.userRepository.findOne({ where: { id: userId } });
 
         if (user) {
-            user.password = await bcrypt.hash(newPassword, 10); // Hash the new password
+            user.password = await bcrypt.hash(newPassword, 10);
             await this.userRepository.save(user);
         }
         return user;

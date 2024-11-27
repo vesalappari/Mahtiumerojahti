@@ -11,7 +11,7 @@ export class GameService {
   ) {}
 
   async createGame(userName:string): Promise<Game> {
-    await this.removeUnfinishedGames();
+    await this.removeUnfinishedGames(userName);
     const game = this.gameRepository.create({
       secretNumber: Math.floor(Math.random() * 100) + 1,
       attempts: 0,
@@ -59,8 +59,8 @@ export class GameService {
     return { correct, close, lower, higher, attempts: game.attempts };
   }
 
-  async removeUnfinishedGames(): Promise<void> {
-    await this.gameRepository.delete({ isGuessed: false });
+  async removeUnfinishedGames(name: string): Promise<void> {
+    await this.gameRepository.delete({ isGuessed: false, userName: name });
   }
 
   findAll(isGuessed: boolean) {
