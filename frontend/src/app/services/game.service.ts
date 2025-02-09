@@ -8,7 +8,7 @@ import {StorageService} from "./storage.service";
 })
 
 export class GameService {
-  private apiUrl = 'http://192.168.1.108:3000/game';
+  private apiUrl = 'http://localhost:3000/game';
   showGame: boolean = false;
 
   constructor(

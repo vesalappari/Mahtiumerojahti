@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     providedIn: 'root',
 })
 export class UserService {
-    private apiUrl = 'http://192.168.1.108:3000/users';
+    private apiUrl = 'http://localhost:3000/users';
 
     public currentUser: BehaviorSubject<User | null>;
     showUserAuth: boolean = true;
