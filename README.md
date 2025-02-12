@@ -14,6 +14,6 @@ This is a full-stack implementation of a number guessing game using a backend wr
    npm install
 
 4. To set up docker adjust docker-compose.yml and in your terminal navigate to your project's root directory and run:
-   docker-compose up --build
+   docker compose up --build
 
 This README walks through the steps needed to set up the Back-end (NestJS), Front-end (Angular), PostgreSQL database and Docker instances required for this project.
