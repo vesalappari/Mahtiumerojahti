@@ -139,3 +139,8 @@ backend/dist/tsconfig.build.tsbuildinfo
 /backend/dist
 backend/dist/tsconfig.build.tsbuildinfo
 backend/dist/tsconfig.build.tsbuildinfo
+backend/src/app.module.ts
+backend/dist/app.module.js
+backend/dist/app.module.js.map
+backend/dist/tsconfig.build.tsbuildinfo
+docker-compose.yml
